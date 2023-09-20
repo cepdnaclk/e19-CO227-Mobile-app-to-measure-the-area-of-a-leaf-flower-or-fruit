@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import 'expo-dev-client';
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
-import React,{useState,useEffect} from 'react';
 import Header from '../Header';
+import Try from './Try';
+import  CameraComponent from './CameraComponent';
 
- const Landing=({navigation}) =>{
-  const [initializing, setInitializing]= useState(true);
-  const [user, setUser]= useState();
+const Landing = () => {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  const [showTryComponent, setShowTryComponent] = useState(false);
 
   GoogleSignin.configure({
     webClientId: '149208804617-lfq3ecfk3pqnkq9mgnih9e5ltu8bova6.apps.googleusercontent.com',
   });
 
-  function onAuthStateChanged(user){
+  function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
   }
@@ -24,58 +25,67 @@ import Header from '../Header';
     return subscriber;
   }, []);
 
-  const onGoogleButtonPress = async() => {
-    const {idToken} = await GoogleSignin.signIn();
+  const onGoogleButtonPress = async () => {
+    const { idToken } = await GoogleSignin.signIn();
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    
-    const user_sign_in = auth().signInWithCredential(googleCredential);
-    user_sign_in.then((user) => {
-      console.log(user);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-  }
-  const signOut = async () =>{
-    try{
+
+    const userSignIn = auth().signInWithCredential(googleCredential);
+    userSignIn
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signOut = async () => {
+    try {
       await GoogleSignin.revokeAccess();
       await auth().signOut();
-    } catch (error){
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
+
+  const next = () => {
+    setShowTryComponent(true);
+  };
 
   if (initializing) return null;
 
-  if(!user){
-    return(
+  if (!user) {
+    return (
       <View style={styles.container}>
         <Header />
-        <GoogleSigninButton 
-         style={{width:300, height:65, marginTop:300}}
-         onPress={onGoogleButtonPress}
+        <GoogleSigninButton
+          style={{ width: 300, height: 65, marginTop: 300 }}
+          onPress={onGoogleButtonPress}
         />
       </View>
-    )
+    );
   }
-  return(
-    <View style ={styles.container}>
-    
-    <Header />
-    <View style={{marginTop:100, alignItems:'center'}}>
-      <Text style={styles.text}>Welcome, {user.displayName}</Text>
-      <Image 
-      source={{uri: user.photoURL}}
-      style= {{height:150, width:150, borderRadius:75, margin:75}}
-      />
-      <Button title='Sign Out' onPress={signOut}/>
-      <Text></Text>
-      <Button  title='next' style={styles.button} onPress={()=> navigation.navigate('CameraS')}></Button>
-    </View>
 
+  if (showTryComponent) {
+    return <Try />;
+  }
+
+  return (
+    <View style={styles.container}>
+      <Header />
+      <View style={{ marginTop: 100, alignItems: 'center' }}>
+        <Text style={styles.text}>Welcome, {user.displayName}</Text>
+        <Image
+          source={{ uri: user.photoURL }}
+          style={{ height: 150, width: 150, borderRadius: 75, margin: 75 }}
+        />
+        <Button title="Sign Out" onPress={signOut} />
+        <Text></Text>
+        <Button onPress={next} title="Next" style={styles.button}></Button>
+      </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -84,13 +94,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text:{
+  text: {
     fontSize: 23,
     fontWeight: 'bold',
   },
-  button:{
-    margin:10,
-    padding: 50
+  button: {
+    margin: 10,
+    padding: 50,
   },
 });
 

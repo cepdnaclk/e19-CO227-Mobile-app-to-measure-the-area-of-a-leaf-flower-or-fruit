@@ -1,26 +1,26 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Camera } from 'expo-camera'; // Import Camera from 'expo-camera'
+import { Camera } from 'expo-camera';
 import React, { useState, useEffect, useRef } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 import Button from "../component/Button";
 
-const CameraComponent = () => {
+export default function CameraC() {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
   const cameraRef = useRef(null);
 
-  useEffect(() => { // Fix the typo: useEffect instead of useInsertionEffect
+  useEffect(() => {
     (async () => {
-      MediaLibrary.requestPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === 'granted');
     })();
   }, []);
 
   const takePicture = async () => {
-    if (cameraRef) {
+    if (cameraRef.current) {
       try {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
@@ -35,7 +35,7 @@ const CameraComponent = () => {
     if (image) {
       try {
         await MediaLibrary.createAssetAsync(image);
-        alert('Picture saved!'); // Changed to 'saved' (typo)
+        alert('Picture saved!');
         setImage(null);
       } catch (e) {
         console.log(e);
@@ -53,18 +53,19 @@ const CameraComponent = () => {
         <Camera
           style={styles.camera}
           type={type}
-          flashMode={flash} // Changed to flashMode (typo)
+          flashMode={flash}
           ref={cameraRef}>
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            padding: 30
+            padding: 10
           }}>
             <Button icon={'retweet'} onPress={() => {
               setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back);
             }} />
             <Button icon={'flash'}
               color={flash === Camera.Constants.FlashMode.off ? 'gray' : '#f1f1f1'}
+              style={styles.flash}
               onPress={() => {
                 setFlash(flash === Camera.Constants.FlashMode.off
                   ? Camera.Constants.FlashMode.on
@@ -102,9 +103,12 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   camera: {
-    flex: 1,
-    borderRadius: 20,
+    borderWidth: 150,
+    flex:1,
+    margin:6
+  },
+  flash:{
+    paddingTop:88
   }
 });
 
-export default CameraComponent
