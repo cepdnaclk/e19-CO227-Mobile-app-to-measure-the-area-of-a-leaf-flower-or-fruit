@@ -28,9 +28,11 @@ This is a sample image, to show how to add images to your page. To learn more op
 ## Table of Contents
 
 1. [Introduction](#introduction)
-3. [Links](#links)
-4. [Data and Control Flow](#data-and-control-flow)
-5. [App UI](#app-ui)
+2. [Links](#links)
+3. [Data and Control Flow](#data-and-control-flow)
+4. [App UI](#app-ui)
+5. [Key Feature](#key-features)
+
 
 ---
 
@@ -85,8 +87,15 @@ The principal goal is to develop a mobile application designed to facilitate the
 
 </div>
 
+---
 
+## Key Features
 
+1. 2D - leaf area calculator
+2. Realtime leaf recognition
+3. History management
+4. Report generator
+5. Sharing results 
 
 ---
 
