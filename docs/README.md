@@ -43,7 +43,9 @@ The crop department of agriculture faculty is expecting to use a mobile app to m
 ## Objective
 
 The principal goal is to develop a mobile application designed to facilitate the calculation of leaf surface area. This application aims to provide a valuable tool for researchers, students, and farmers, streamlining their tasks and enhancing their ability to measure and analyze leaves more efficiently.
- 
+
+---
+
 ## Data and Control Flow 
 
 ![geol](./images/geo.png)
@@ -53,7 +55,7 @@ The principal goal is to develop a mobile application designed to facilitate the
 ## App UI
 
 1. Sign-in Screen
-![geol](./images/sign.jpg)
+![sign](./images/sign.jpg)
 
 2. Home page /  Camera screen
 ![cam](./images/cam.jpg)
