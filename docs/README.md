@@ -29,8 +29,8 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 1. [Introduction](#introduction)
 3. [Links](#links)
-4. [Data and Control Flow](#Data-and-Control-Flow)
-5. [App UI](#App-UI)
+4. [Data and Control Flow](#data-and-control-flow)
+5. [App UI](#app-ui)
 
 ---
 
@@ -59,6 +59,8 @@ The principal goal is to develop a mobile application designed to facilitate the
 <div class="figure container">
 <img class="mx-auto d-block" src="./images/sign.jpg" alt="Sample Image" width="450" />
 <br>
+ <br>
+ <br>
 </div>
 
 2. Camera screen
