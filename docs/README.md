@@ -45,7 +45,8 @@ The principal goal is to develop a mobile application designed to facilitate the
  
 ## Data and Control Flow 
 
-![conrol-flow](./images/sample.png)
+![Sample](./images/sample.png)
+![Geolocation API (2)](./images/Geolocation API (2).png)
 
 
 
