@@ -36,7 +36,7 @@ This is a sample image, to show how to add images to your page. To learn more op
  The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit. Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
 
 ---
- ## Objective
+## Objective
 The principal goal is to develop a mobile application designed to facilitate the calculation of leaf surface area. This application aims to provide a valuable tool for researchers, students, and farmers, streamlining their tasks and enhancing their ability to measure and analyze leaves more efficiently.
  
 
