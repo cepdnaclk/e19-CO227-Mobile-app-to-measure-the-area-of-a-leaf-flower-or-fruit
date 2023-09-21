@@ -28,14 +28,15 @@ This is a sample image, to show how to add images to your page. To learn more op
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Links](#links)
-3. [Data and Control Flow](#Data-and-Control-Flow)
+3. [Links](#links)
+4. [Data and Control Flow](#Data-and-Control-Flow)
+5. [App UI](#App-UI)
 
 ---
 
 ## Introduction
 
- The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit. Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
+The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit. Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
 
 ---
 
@@ -45,9 +46,23 @@ The principal goal is to develop a mobile application designed to facilitate the
  
 ## Data and Control Flow 
 
-![Sample](./images/sample.png)
-![geo](./images/geo.png)
+![geol](./images/geo.png)
 
+---
+
+## App UI
+
+1. Sign-in Screen
+![geol](./images/sign.jpg)
+
+2. Home page /  Camera screen
+![cam](./images/cam.jpg)
+
+3. Adjust the focus screen  
+![focus](./images/focus.jpg)
+
+4. Report screen
+![report](./images/report.jpg)
 
 
 ## Links
