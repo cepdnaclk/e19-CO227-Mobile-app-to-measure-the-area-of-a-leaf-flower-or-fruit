@@ -33,7 +33,13 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 ## Introduction
 
- The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit.Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
+ The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit. Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
+
+ ## Objective
+The principal goal is to develop a mobile application designed to facilitate the calculation of leaf surface area. This application aims to provide a valuable tool for researchers, students, and farmers, streamlining their tasks and enhancing their ability to measure and analyze leaves more efficiently.
+ 
+
+ 
 
 ## Links
 
@@ -42,7 +48,7 @@ This is a sample image, to show how to add images to your page. To learn more op
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
-- https://github.com/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/blob/ui/docs/images/sample.png?raw=true
+
 
 
 [//]: # (Please refer this to learn more about Markdown syntax)
