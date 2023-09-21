@@ -57,7 +57,7 @@ The principal goal is to develop a mobile application designed to facilitate the
 1. Sign-in Screen
 
 <div class="figure container">
-<img class="mx-auto d-block" src="./images/sign.jpg" alt="Sample Image" width="450" />
+<img class="mx-auto d-block" src="./images/2.png" alt="Sample Image" width="450" />
 <br>
  <br>
  <br>
@@ -66,14 +66,14 @@ The principal goal is to develop a mobile application designed to facilitate the
 2. Camera screen
    
 <div class="figure container">
-<img class="mx-auto d-block" src="./images/cam.jpg" alt="Sample Image" width="450" />
+<img class="mx-auto d-block" src="./images/3.png" alt="Sample Image" width="450" />
 
 </div>
 
 3. Adjust the focus screen
    
 <div class="figure container">
-<img class="mx-auto d-block" src="./images/focus.jpg" alt="Sample Image" width="450" />
+<img class="mx-auto d-block" src="./images/1.png" alt="Sample Image" width="450" />
 
 </div>
 
@@ -81,7 +81,7 @@ The principal goal is to develop a mobile application designed to facilitate the
 4. Report screen
 
 <div class="figure container">
-<img class="mx-auto d-block" src="./images/report.jpg" alt="Sample Image" width="450" />
+<img class="mx-auto d-block" src="./images/4.png" alt="Sample Image" width="450" />
 
 </div>
 
