@@ -29,6 +29,7 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 1. [Introduction](#introduction)
 2. [Links](#links)
+3. [Data and Control Flow](#Data-and-Control-Flow)
 
 ---
 
@@ -42,8 +43,11 @@ This is a sample image, to show how to add images to your page. To learn more op
 
 The principal goal is to develop a mobile application designed to facilitate the calculation of leaf surface area. This application aims to provide a valuable tool for researchers, students, and farmers, streamlining their tasks and enhancing their ability to measure and analyze leaves more efficiently.
  
+## Data and Control Flow 
 
- 
+![conrol-flow](./images/sample.png)
+
+
 
 ## Links
 
