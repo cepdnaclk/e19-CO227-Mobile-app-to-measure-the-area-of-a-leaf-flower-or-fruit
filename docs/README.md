@@ -56,21 +56,35 @@ The principal goal is to develop a mobile application designed to facilitate the
 
 1. Sign-in Screen
 
-![sign](./images/sign.jpg)
+<div class="figure container">
+<img class="mx-auto d-block" src="./images/sign.jpg" alt="Sample Image" width="450" />
+<br>
+</div>
 
 2. Camera screen
    
-![cam](./images/cam.jpg)
+<div class="figure container">
+<img class="mx-auto d-block" src="./images/cam.jpg" alt="Sample Image" width="450" />
 
+</div>
 
 3. Adjust the focus screen
    
-![focus](./images/focus.jpg)
+<div class="figure container">
+<img class="mx-auto d-block" src="./images/focus.jpg" alt="Sample Image" width="450" />
+
+</div>
 
 
 4. Report screen
 
-![report](./images/report.jpg)
+<div class="figure container">
+<img class="mx-auto d-block" src="./images/report.jpg" alt="Sample Image" width="450" />
+
+</div>
+
+
+
 
 ---
 
