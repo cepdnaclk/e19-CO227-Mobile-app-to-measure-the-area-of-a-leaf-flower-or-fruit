@@ -54,17 +54,10 @@ The principal goal is to develop a mobile application designed to facilitate the
 
 ## App UI
 
-1. Sign-in Screen
+Sign-in Screen
 ![sign](./images/sign.jpg)
 
-2. Home page /  Camera screen
-![cam](./images/cam.jpg)
 
-3. Adjust the focus screen  
-![focus](./images/focus.jpg)
-
-4. Report screen
-![report](./images/report.jpg)
 
 
 ## Links
