@@ -1,0 +1,33 @@
+{
+    "team": [
+        {
+            "name": "BAMBARAGAMA H.M.K.D.",
+            "email": "e19034@eng.pdn.ac.lk",
+            "eNumber": "E/19/034"
+        },
+        {
+            "name": "MADHUSHANKA K.G.M.",
+            "email": "e19226@eng.pdn.ac.lk",
+            "eNumber": "E/19/226"
+        },
+        {
+            "name": "ABREW S.T.D.",
+            "email": "e19006@eng.pdn.ac.lk",
+            "eNumber": "E/19/006"
+        },
+        {
+            "name": "WICKRAMAARACHCHI U.I.",
+            "email": "e19432@eng.pdn.ac.lk",
+            "eNumber": "E/19/432"
+        }
+    ],
+    "supervisors": [
+        {
+            "name": "Dr. Asitha Bandaranayake",
+            "email": "asithab@eng.pdn.ac.lk"
+        }
+    ],
+    "tags": [
+        "Mobile app","AgroCam","Area of a leaf"
+    ]
+}
