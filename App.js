@@ -14,7 +14,7 @@ import SplashScreen from "./screens/SplashScreen";
 import LogInScreen from "./screens/LogInScreen";
 
 export default function App() {
-  return <LogInScreen />;
+  return <FocuScreen />;
 }
 
 const styles = StyleSheet.create({
