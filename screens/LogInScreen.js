@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LottieView from "lottie-react-native";
 
 import {
@@ -18,6 +18,14 @@ import AppButton from "../components/AppButton";
 import AppTextInput from "../components/AppTextInput";
 
 function LogInScreen(props) {
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const printItems = (item1, item2) => {
+    console.log(item1);
+    console.log(item2);
+  };
+
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
@@ -36,14 +44,26 @@ function LogInScreen(props) {
 
         <View style={styles.container2}>
           <AppText style={styles.title}>Log In</AppText>
-          <AppTextInput style={styles.input} placeholder="Username" />
+          <AppTextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setUserName(value);
+            }}
+            placeholder="Username"
+          />
 
-          <AppTextInput style={styles.input} placeholder="Password" />
+          <AppTextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setPassword(value);
+            }}
+            placeholder="Password"
+          />
 
           <AppButton
             title="Login"
             style={styles.signBtn}
-            onPress={() => console.log("Log in")}
+            onPress={() => printItems(username, password)}
           ></AppButton>
           <View style={styles.goToLoginContainer}>
             <AppText style={styles.goToLoginText}>
