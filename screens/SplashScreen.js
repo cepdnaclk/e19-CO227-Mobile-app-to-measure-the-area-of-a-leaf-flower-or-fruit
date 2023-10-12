@@ -6,6 +6,7 @@ import {
   Animated,
   Text,
 } from "react-native";
+import AppTextInput from "../components/AppTextInput";
 
 function SplashScreen(props) {
   const leftValue = useState(new Animated.Value(240))[0]; // Start at 200 (right corner)
@@ -39,7 +40,6 @@ function SplashScreen(props) {
 
   function getDisplayedLetter(value) {
     if (value <= 40) {
-      
       return "K";
     } else if (value <= 140) {
       console.log("dione");
@@ -65,14 +65,7 @@ function SplashScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        {displayedLetters.map((item, index) => (
-          <Text
-            key={index}
-            style={[styles.revealText, { right: item.position }]}
-          >
-            {item.letter}
-          </Text>
-        ))}
+        <AppTextInput></AppTextInput>
         <Animated.Image
           source={require("../assets/logo-black.png")}
           style={{

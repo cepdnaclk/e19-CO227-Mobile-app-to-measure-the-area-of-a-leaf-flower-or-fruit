@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "Roboto",
     fontWeight: "700",
-    paddingVertical: 7,
     color: colors.black,
   },
 });

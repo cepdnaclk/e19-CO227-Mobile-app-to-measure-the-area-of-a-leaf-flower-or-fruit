@@ -4,16 +4,17 @@ import Screen from "./screens/Screen";
 import AppButton from "./components/AppButton";
 import CameraScreen from "./screens/CameraScreen";
 import FocuScreen from "./screens/FocuScreen";
-import SignScreen from "./screens/SignScreen";
+import SignUpScreen from "./screens/SignUpScreen";
 import ProecessImageScreen from "./screens/ProecessImageScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import AddDataScreen from "./screens/AddDataScreen";
 import FetchTest from "./screens/FetchTest";
 import CameraTest from "./screens/CameraTest";
-import SplashScreen from "./screens/SplashScreen";
+import SplashScreen from "./screens/SplashScreen";  
+import LogInScreen from "./screens/LogInScreen";
 
 export default function App() {
-  return <SignScreen />;
+  return <LogInScreen />;
 }
 
 const styles = StyleSheet.create({
