@@ -13,7 +13,7 @@ import CameraTest from "./screens/CameraTest";
 import SplashScreen from "./screens/SplashScreen";
 
 export default function App() {
-  return <SplashScreen />;
+  return <SignScreen />;
 }
 
 const styles = StyleSheet.create({
