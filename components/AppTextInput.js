@@ -2,10 +2,14 @@ import React from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import colors from "../config/colors";
 
-function AppTextInput({ placeholder, style }) {
+function AppTextInput({ placeholder, style, onChangeText }) {
   return (
     <View style={[styles.container, style]}>
-      <TextInput style={styles.textInput} placeholder={placeholder} />
+      <TextInput
+        style={styles.textInput}
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+      />
     </View>
   );
 }

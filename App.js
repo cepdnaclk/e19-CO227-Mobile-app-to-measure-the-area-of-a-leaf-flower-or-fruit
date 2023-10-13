@@ -10,11 +10,11 @@ import HistoryScreen from "./screens/HistoryScreen";
 import AddDataScreen from "./screens/AddDataScreen";
 import FetchTest from "./screens/FetchTest";
 import CameraTest from "./screens/CameraTest";
-import SplashScreen from "./screens/SplashScreen";  
+import SplashScreen from "./screens/SplashScreen";
 import LogInScreen from "./screens/LogInScreen";
 
 export default function App() {
-  return <LogInScreen />;
+  return <FocuScreen />;
 }
 
 const styles = StyleSheet.create({
