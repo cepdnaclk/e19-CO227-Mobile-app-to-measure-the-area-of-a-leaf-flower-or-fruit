@@ -15,6 +15,7 @@ function CameraScreen({navigation}) {
   const [image, setImage] = useState(null);
   const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+  const [isTakingPicture, setIsTakingPicture] = useState(false);
   
 
   useEffect(() => {
@@ -27,6 +28,15 @@ function CameraScreen({navigation}) {
     })();
   }, []);
 
+  const resetCamera = async () => {
+    setIsTakingPicture(false); // Reset the flag
+    setImage(null); // Clear the image
+    const cameraStatus = await Camera.requestCameraPermissionsAsync();
+    setCameraPermission(cameraStatus.status === 'granted');
+    navigation.navigate('ProecessImageScreen', { resetCamera });
+  };
+  
+
   const toggleCameraType = () => {
     // Toggle between front and back cameras
     console.log('hi');
@@ -38,12 +48,21 @@ function CameraScreen({navigation}) {
   };
 
   const takePicture = async () => {
-    if (cameraPermission && cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      setImage(photo.uri);
-      navigation.navigate('ProecessImageScreen', { imageUri: photo.uri });
+    if (cameraPermission && cameraRef.current && !isTakingPicture) {
+      setIsTakingPicture(true); // Set the flag
+      try {
+        const photo = await cameraRef.current.takePictureAsync();
+        setIsTakingPicture(false); // Reset the flag after taking the picture
+        console.log('Picture taken:', photo.uri);
+        setImage(photo.uri);
+        navigation.navigate('ProecessImageScreen', { imageUri: photo.uri });
+      } catch (error) {
+        console.error('Error taking picture:', error);
+        setIsTakingPicture(false); // Reset the flag on error
+      }
     }
   };
+
 
   const pickImage = async () => {
     if (galleryPermission) {
@@ -68,7 +87,7 @@ function CameraScreen({navigation}) {
         {cameraPermission && (
         <Camera
           ref={cameraRef}
-          style={{ width: windowWidth, height: windowHeight - 150 }}
+          style={{ width: windowWidth, height: windowHeight - 175 , marginTop:1}}
           type={cameraType}
         />
       )}
@@ -85,7 +104,7 @@ function CameraScreen({navigation}) {
             name="image-outline"
             color="white"
             size={40}
-            style={{ padding: 15 }}
+            style={{ padding: 10 }}
             onPress={pickImage} disabled={!galleryPermission}
           ></VectorButton>
           <ImageButton
@@ -94,6 +113,7 @@ function CameraScreen({navigation}) {
             style={{ padding: 15 }}
             onPress={takePicture} 
             disabled={!cameraPermission}
+            onPictureTaken={resetCamera}
           
           ></ImageButton>
           <VectorButton

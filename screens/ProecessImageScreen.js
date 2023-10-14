@@ -1,6 +1,8 @@
 import React from "react";
 
 import { View, StyleSheet, Image } from "react-native";
+import { CommonActions } from '@react-navigation/native';
+
 
 import Screen from "./Screen";
 import colors from "../config/colors";
@@ -8,6 +10,12 @@ import VectorTextBtn from "../components/VectorTextBtn";
 
 function ProecessImageScreen({ route , navigation}) {
   const { imageUri } = route.params;
+
+  const handleRetake = () => {
+    navigation.navigate('CameraScreen');
+
+  };
+
 
   return (
     <Screen color={colors.color4}>
@@ -22,7 +30,7 @@ function ProecessImageScreen({ route , navigation}) {
           size={40}
           title="Retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={() => navigation.navigate('CameraScreen') } 
+          onPress={handleRetake} 
         />
         <VectorTextBtn
           name="rotate-right"

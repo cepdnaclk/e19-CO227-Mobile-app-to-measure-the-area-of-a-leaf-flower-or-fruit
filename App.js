@@ -7,16 +7,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CameraScreen from './screens/CameraScreen';
 import HistoryScreen from "./screens/HistoryScreen";
 import ProecessImageScreen from "./screens/ProecessImageScreen";
+import OnboardingScreen from "./screens/OnboardingScreen";
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator >
+      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{header: () => null}}/>
         <Stack.Screen name="CameraScreen" component={CameraScreen} options={{header: () => null}}/>
-        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}} />
         <Stack.Screen name="ProecessImageScreen" component={ProecessImageScreen} options={{header: () => null}} />
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}} />
         {/* Add more screens here */}
       </Stack.Navigator>
     </NavigationContainer>
