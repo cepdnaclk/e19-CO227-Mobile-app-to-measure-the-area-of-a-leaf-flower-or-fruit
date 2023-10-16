@@ -1,69 +1,57 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, Image, Button } from "react-native";
 import { Camera } from 'expo-camera';
+import React, { useState, useEffect, useRef } from 'react';
+import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
-import { windowWidth , windowHeight} from '../components/Dimetions';
+import { useFocusEffect } from '@react-navigation/native';
+import { windowWidth, windowHeight } from '../components/Dimetions';
+import colors from '../config/colors';
+import ImageButton from '../components/ImageButton';
+import VectorButton from '../components/VectorButton';
+import Screen from './Screen';
 
-import { View, StyleSheet, Image } from "react-native";
-import colors from "../config/colors";
-import ImageButton from "../components/ImageButton";
-import VectorButton from "../components/VectorButton";
-import Screen from "./Screen";
-
-function CameraScreen({navigation}) {
-  const [cameraPermission, setCameraPermission] = useState(null);
+export default function CameraScreen({navigation}) {
+  const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [galleryPermission, setGalleryPermission] = useState(null);
   const [image, setImage] = useState(null);
-  const cameraRef = useRef(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-  const [isTakingPicture, setIsTakingPicture] = useState(false);
-  
+  const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
+  const [isCameraActive, setIsCameraActive] = useState(true);
+  const cameraRef = useRef(null);
+
+  const checkPermissions = async () => {
+    const cameraStatus = await Camera.requestCameraPermissionsAsync();
+    const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    setHasCameraPermission(cameraStatus.status === 'granted');
+    setGalleryPermission(galleryStatus.status === 'granted');
+  };
 
   useEffect(() => {
-    (async () => {
-      const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setCameraPermission(cameraStatus.status === 'granted');
-
-      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setGalleryPermission(galleryStatus.status === 'granted');
-    })();
+    checkPermissions();
   }, []);
 
-  const resetCamera = async () => {
-    setIsTakingPicture(false); // Reset the flag
-    setImage(null); // Clear the image
-    const cameraStatus = await Camera.requestCameraPermissionsAsync();
-    setCameraPermission(cameraStatus.status === 'granted');
-    navigation.navigate('ProecessImageScreen', { resetCamera });
-  };
-  
-
-  const toggleCameraType = () => {
-    // Toggle between front and back cameras
-    console.log('hi');
-    setCameraType(
-      cameraType === Camera.Constants.Type.back
-        ? Camera.Constants.Type.front
-        : Camera.Constants.Type.back
-    );
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      setIsCameraActive(true);
+      return () => {
+        setIsCameraActive(false);
+        setImage(null);
+      };
+    }, [])
+  );
 
   const takePicture = async () => {
-    if (cameraPermission && cameraRef.current && !isTakingPicture) {
-      setIsTakingPicture(true); // Set the flag
+    if (cameraRef.current) {
       try {
-        const photo = await cameraRef.current.takePictureAsync();
-        setIsTakingPicture(false); // Reset the flag after taking the picture
-        console.log('Picture taken:', photo.uri);
-        setImage(photo.uri);
-        navigation.navigate('ProecessImageScreen', { imageUri: photo.uri });
-      } catch (error) {
-        console.error('Error taking picture:', error);
-        setIsTakingPicture(false); // Reset the flag on error
+        const data = await cameraRef.current.takePictureAsync();
+        console.log(data);
+        setImage(data.uri);
+      } catch (e) {
+        console.log(e);
       }
     }
   };
-
-
+  
   const pickImage = async () => {
     if (galleryPermission) {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -79,139 +67,116 @@ function CameraScreen({navigation}) {
     }
   };
 
-  
+  const toggleCameraType = () => {
+    setCameraType(
+      cameraType === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  };
+
+  const saveImage = async () => {
+    if (image) {
+      try {
+        await MediaLibrary.createAssetAsync(image);
+        //alert('Picture saved!');
+        setImage(null);
+        navigation.navigate('ProecessImageScreen', { savedImage: image });
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+
+  if (hasCameraPermission === false) {
+    return <Text>No access to camera</Text>
+  }
 
   return (
-    <Screen color="black">
-      <View style={styles.container}>
-        {cameraPermission && (
-        <Camera
-          ref={cameraRef}
-          style={{ width: windowWidth, height: windowHeight - 175 , marginTop:1}}
-          type={cameraType}
-        />
+    <View style={styles.container}>
+      {!image ? (
+        <Screen color="black">
+          <View style={styles.container}>
+            {isCameraActive && hasCameraPermission && (
+              <Camera
+                ref={cameraRef}
+                style={{ width: windowWidth, height: windowHeight - 150, marginTop: -75 }}
+                type={cameraType}
+              />
+            )}
+            <View style={styles.menu}>
+              <VectorButton
+                name="history"
+                color="white"
+                size={40}
+                style={{ padding: 15 }}
+                onPress={() => navigation.navigate('HistoryScreen')}
+              ></VectorButton>
+              <VectorButton
+                name="image-outline"
+                color="white"
+                size={40}
+                style={{ padding: 10 }}
+                onPress={pickImage} disabled={!galleryPermission}
+              ></VectorButton>
+              <ImageButton
+                image={require('../assets/AgroCam.png')}
+                size={70}
+                style={{ padding: 15 }}
+                onPress={takePicture}
+                disabled={!hasCameraPermission}
+              ></ImageButton>
+              <VectorButton
+                name="account-settings-outline"
+                color="white"
+                size={40}
+                style={{ padding: 15 }}
+              ></VectorButton>
+              <VectorButton
+                name="camera-flip-outline"
+                color="white"
+                size={40}
+                style={{ padding: 15 }}
+                onPress={toggleCameraType}
+              ></VectorButton>
+            </View>
+          </View>
+        </Screen>
+      ) : (
+        <Image source={{ uri: image }} style={styles.camera} />
       )}
-        <View style={styles.menu}>
-          <VectorButton
-            name="history"
-            color="white"
-            size={40}
-            style={{ padding: 15 }}
-            onPress={() => navigation.navigate('HistoryScreen') } 
-            
-          ></VectorButton>
-          <VectorButton
-            name="image-outline"
-            color="white"
-            size={40}
-            style={{ padding: 10 }}
-            onPress={pickImage} disabled={!galleryPermission}
-          ></VectorButton>
-          <ImageButton
-            image={require("../assets/AgroCam.png")}
-            size={70}
-            style={{ padding: 15 }}
-            onPress={takePicture} 
-            disabled={!cameraPermission}
-            onPictureTaken={resetCamera}
-          
-          ></ImageButton>
-          <VectorButton
-            name="account-settings-outline"
-            color="white"
-            size={40}
-            style={{ padding: 15 }}
-          ></VectorButton>
-          <VectorButton
-            name="camera-flip-outline"
-            color="white"
-            size={40}
-            style={{ padding: 15 }}
-            onPress={toggleCameraType}
-          ></VectorButton>
-        </View>
+      <View>
+        {image ? (
+          <View style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 50
+          }}>
+            <Button title={"Re-take"} icon="retweet" onPress={() => setImage(null)} />
+            <Button title={"Save"} icon="check" onPress={saveImage} />
+          </View>
+        ): null}
       </View>
-    </Screen>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { backgroundColor: colors.black, paddingTop: 50, flex: 1 },
+  camera: {
+    borderWidth: 150,
+    flex: 1,
+    margin: 6
+  },
+  flash: {
+    paddingTop: 88
+  },
   menu: {
     backgroundColor: colors.black,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
     height: 100,
   },
 });
-
-export default CameraScreen;
-
-
-
-//here i need to display the taken picture when i'm pressed the history button
-
-
-
-
-/*import React, { useState, useEffect, useRef } from 'react';
-import { View, Button, Image } from 'react-native';
-import { Camera } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
-
-export default function App() {
-  const [cameraPermission, setCameraPermission] = useState(null);
-  const [galleryPermission, setGalleryPermission] = useState(null);
-  const [image, setImage] = useState(null);
-  const cameraRef = useRef(null);
-
-  useEffect(() => {
-    (async () => {
-      const cameraStatus = await Camera.requestPermissionsAsync();
-      setCameraPermission(cameraStatus.status === 'granted');
-
-      const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setGalleryPermission(galleryStatus.status === 'granted');
-    })();
-  }, []);
-
-  const takePicture = async () => {
-    if (cameraPermission && cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync();
-      setImage(photo.uri);
-    }
-  };
-
-  const pickImage = async () => {
-    if (galleryPermission) {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!result.cancelled) {
-        setImage(result.uri);
-      }
-    }
-  };
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {cameraPermission && (
-        <Camera
-          ref={cameraRef}
-          style={{ width: 300, height: 300 }}
-          type={Camera.Constants.Type.back}
-        />
-      )}
-      <Button title="Take a Picture" onPress={takePicture} disabled={!cameraPermission} />
-      <Button title="Pick an Image from Gallery" onPress={pickImage} disabled={!galleryPermission} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-    </View>
-  );
-}*/
-

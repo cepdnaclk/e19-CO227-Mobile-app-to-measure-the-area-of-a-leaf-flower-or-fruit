@@ -17,7 +17,7 @@ function App() {
       <Stack.Navigator >
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{header: () => null}}/>
         <Stack.Screen name="CameraScreen" component={CameraScreen} options={{header: () => null}}/>
-        <Stack.Screen name="ProecessImageScreen" component={ProecessImageScreen} options={{header: () => null}} />
+        <Stack.Screen name="ProecessImageScreen" component={ProecessImageScreen} options={{header: () => null}}/>
         <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}} />
         {/* Add more screens here */}
       </Stack.Navigator>

@@ -8,20 +8,15 @@ import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-function ProecessImageScreen({ route , navigation}) {
-  const { imageUri } = route.params;
-
-  const handleRetake = () => {
-    navigation.navigate('CameraScreen');
-
-  };
+function ProecessImageScreen({ route }) {
+  const { savedImage } = route.params;
 
 
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-        <Image source={{ uri: imageUri }} style={{ width: '100%', height: '100%' }} />
+        <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
         </View>
       </View>
       <View style={styles.downPart}>
@@ -30,7 +25,7 @@ function ProecessImageScreen({ route , navigation}) {
           size={40}
           title="Retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={handleRetake} 
+          //onPress={handleRetake}
         />
         <VectorTextBtn
           name="rotate-right"
