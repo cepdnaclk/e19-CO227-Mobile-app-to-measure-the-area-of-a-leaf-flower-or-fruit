@@ -10,6 +10,7 @@ import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 import { customStyles4 } from "./styles/styles";
 import VectorButton from "../components/VectorButton";
+import GetArea from "../components/GetArea";
 
 function FocuScreen(props) {
   return (
@@ -32,7 +33,10 @@ function FocuScreen(props) {
             onPress={() => console.log("go to more")}
           ></AppButton>
         </View>
-        <View style={styles.middleContainer}></View>
+        <View style={styles.middleContainer}>  
+            {/*get area <GetArea {focus}/> comes here use usesatate for synchronizing*/}
+            <GetArea focus={100}/>
+        </View>
         <View style={styles.downContainer}>
           <AppText>Adjust to focus</AppText>
 
