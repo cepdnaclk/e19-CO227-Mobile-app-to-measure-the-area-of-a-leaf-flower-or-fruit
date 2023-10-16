@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { StyleSheet, Text, View, Image, Button} from "react-native";
 import { Camera } from 'expo-camera';
 import React, { useState, useEffect, useRef } from 'react';
 import * as MediaLibrary from 'expo-media-library';
@@ -9,6 +9,7 @@ import colors from '../config/colors';
 import ImageButton from '../components/ImageButton';
 import VectorButton from '../components/VectorButton';
 import Screen from './Screen';
+import VectorTextBtn from "../components/VectorTextBtn";
 
 export default function CameraScreen({navigation}) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
@@ -56,13 +57,17 @@ export default function CameraScreen({navigation}) {
     if (galleryPermission) {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
       });
 
       if (!result.canceled) {
-        setImage(result.uri);
+        // Access the selected assets from the 'assets' array
+        const selectedAsset = result.assets[0]; // Assuming you want the first selected asset
+        const imageUri = selectedAsset.uri; // Use 'uri' from the selected asset
+  
+        // Your code to handle the selected image
+        setImage(imageUri);
       }
     }
   };
@@ -152,8 +157,24 @@ export default function CameraScreen({navigation}) {
             justifyContent: 'space-between',
             paddingHorizontal: 50
           }}>
-            <Button title={"Re-take"} icon="retweet" onPress={() => setImage(null)} />
-            <Button title={"Save"} icon="check" onPress={saveImage} />
+            <VectorTextBtn
+          name="reload"
+          size={40}
+          title="Retake"
+          color={"white"}
+          textStyle={{ fontSize: 8, paddingVertical: 0 }}
+          //onPress={handleRetake}
+          onPress={() => setImage(null)}
+        />
+        <VectorTextBtn
+          name="page-next-outline"
+          size={40}
+          title="Next"
+          color={"white"}
+          textStyle={{ fontSize: 8, paddingVertical: 0 }}
+          onPress={saveImage}
+        />
+        
           </View>
         ): null}
       </View>

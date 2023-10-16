@@ -8,7 +8,7 @@ import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-function ProecessImageScreen({ route }) {
+function ProecessImageScreen({ route , navigation}) {
   const { savedImage } = route.params;
 
 
@@ -21,11 +21,11 @@ function ProecessImageScreen({ route }) {
       </View>
       <View style={styles.downPart}>
         <VectorTextBtn
-          name="reload"
+          name="camera-retake"
           size={40}
-          title="Retake"
+          title="camera-retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          //onPress={handleRetake}
+          onPress={() => navigation.navigate('CameraScreen')}
         />
         <VectorTextBtn
           name="rotate-right"
@@ -40,7 +40,7 @@ function ProecessImageScreen({ route }) {
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
         />
         <VectorTextBtn
-          name="page-next-outline"
+          name="page-next"
           size={40}
           title="Next"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
