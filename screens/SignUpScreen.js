@@ -18,6 +18,7 @@ import AppText from "../components/AppText";
 import colors from "../config/colors";
 import AppButton from "../components/AppButton";
 import AppTextInput from "../components/AppTextInput";
+import validator from 'validator'; 
 
 function SignUpScreen({navigation}) {
   const [email, setEmail] = useState("");
