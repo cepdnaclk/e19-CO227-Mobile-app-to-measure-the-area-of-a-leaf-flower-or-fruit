@@ -1,17 +1,17 @@
-import { StyleSheet, Text, View, Image, Button} from "react-native";
-import { Camera } from 'expo-camera';
-import React, { useState, useEffect, useRef } from 'react';
-import * as MediaLibrary from 'expo-media-library';
-import * as ImagePicker from 'expo-image-picker';
-import { useFocusEffect } from '@react-navigation/native';
-import { windowWidth, windowHeight } from '../components/Dimetions';
-import colors from '../config/colors';
-import ImageButton from '../components/ImageButton';
-import VectorButton from '../components/VectorButton';
-import Screen from './Screen';
+import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { Camera } from "expo-camera";
+import React, { useState, useEffect, useRef } from "react";
+import * as MediaLibrary from "expo-media-library";
+import * as ImagePicker from "expo-image-picker";
+import { useFocusEffect } from "@react-navigation/native";
+import { windowWidth, windowHeight } from "../components/Dimetions";
+import colors from "../config/colors";
+import ImageButton from "../components/ImageButton";
+import VectorButton from "../components/VectorButton";
+import Screen from "./Screen";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-export default function CameraScreen({navigation}) {
+export default function CameraScreen({ navigation }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [galleryPermission, setGalleryPermission] = useState(null);
   const [image, setImage] = useState(null);
@@ -22,9 +22,10 @@ export default function CameraScreen({navigation}) {
 
   const checkPermissions = async () => {
     const cameraStatus = await Camera.requestCameraPermissionsAsync();
-    const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    setHasCameraPermission(cameraStatus.status === 'granted');
-    setGalleryPermission(galleryStatus.status === 'granted');
+    const galleryStatus =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    setHasCameraPermission(cameraStatus.status === "granted");
+    setGalleryPermission(galleryStatus.status === "granted");
   };
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function CameraScreen({navigation}) {
       }
     }
   };
-  
+
   const pickImage = async () => {
     if (galleryPermission) {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -65,7 +66,7 @@ export default function CameraScreen({navigation}) {
         // Access the selected assets from the 'assets' array
         const selectedAsset = result.assets[0]; // Assuming you want the first selected asset
         const imageUri = selectedAsset.uri; // Use 'uri' from the selected asset
-  
+
         // Your code to handle the selected image
         setImage(imageUri);
       }
@@ -86,7 +87,7 @@ export default function CameraScreen({navigation}) {
         await MediaLibrary.createAssetAsync(image);
         //alert('Picture saved!');
         setImage(null);
-        navigation.navigate('ProecessImageScreen', { savedImage: image });
+        navigation.navigate("ProecessImageScreen", { savedImage: image });
       } catch (e) {
         console.log(e);
       }
@@ -94,7 +95,7 @@ export default function CameraScreen({navigation}) {
   };
 
   if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>
+    return <Text>No access to camera</Text>;
   }
 
   return (
@@ -105,7 +106,11 @@ export default function CameraScreen({navigation}) {
             {isCameraActive && hasCameraPermission && (
               <Camera
                 ref={cameraRef}
-                style={{ width: windowWidth, height: windowHeight - 150, marginTop: -75 }}
+                style={{
+                  width: windowWidth,
+                  height: windowHeight - 150,
+                  marginTop: -75,
+                }}
                 type={cameraType}
               />
             )}
@@ -115,17 +120,18 @@ export default function CameraScreen({navigation}) {
                 color="white"
                 size={40}
                 style={{ padding: 15 }}
-                onPress={() => navigation.navigate('HistoryScreen')}
+                onPress={() => navigation.navigate("HistoryScreen")}
               ></VectorButton>
               <VectorButton
                 name="image-outline"
                 color="white"
                 size={40}
                 style={{ padding: 10 }}
-                onPress={pickImage} disabled={!galleryPermission}
+                onPress={pickImage}
+                disabled={!galleryPermission}
               ></VectorButton>
               <ImageButton
-                image={require('../assets/AgroCam.png')}
+                image={require("../assets/AgroCam.png")}
                 size={70}
                 style={{ padding: 15 }}
                 onPress={takePicture}
@@ -152,31 +158,32 @@ export default function CameraScreen({navigation}) {
       )}
       <View>
         {image ? (
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 50
-          }}>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 50,
+            }}
+          >
             <VectorTextBtn
-          name="reload"
-          size={40}
-          title="Retake"
-          color={"white"}
-          textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          //onPress={handleRetake}
-          onPress={() => setImage(null)}
-        />
-        <VectorTextBtn
-          name="page-next-outline"
-          size={40}
-          title="Next"
-          color={"white"}
-          textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={saveImage}
-        />
-        
+              name="reload"
+              size={40}
+              title="Retake"
+              color={"white"}
+              textStyle={{ fontSize: 8, paddingVertical: 0 }}
+              //onPress={handleRetake}
+              onPress={() => setImage(null)}
+            />
+            <VectorTextBtn
+              name="page-next-outline"
+              size={40}
+              title="Next"
+              color={"white"}
+              textStyle={{ fontSize: 8, paddingVertical: 0 }}
+              onPress={saveImage}
+            />
           </View>
-        ): null}
+        ) : null}
       </View>
     </View>
   );
@@ -187,17 +194,17 @@ const styles = StyleSheet.create({
   camera: {
     borderWidth: 150,
     flex: 1,
-    margin: 6
+    margin: 6,
   },
   flash: {
-    paddingTop: 88
+    paddingTop: 88,
   },
   menu: {
     backgroundColor: colors.black,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
     height: 100,
   },
 });

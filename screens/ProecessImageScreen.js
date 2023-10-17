@@ -1,22 +1,31 @@
 import React from "react";
 
 import { View, StyleSheet, Image } from "react-native";
-import { CommonActions } from '@react-navigation/native';
-
+import { CommonActions } from "@react-navigation/native";
 
 import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-function ProecessImageScreen({ route , navigation}) {
-  const { savedImage } = route.params;
+function ProecessImageScreen({ route, navigation }) {
+  // const { savedImage } = route.params;
 
+  const pressRetakeImage = () => {
+    navigation.navigate("CameraScreen");
+  };
+
+  const pressNext = () => {
+    navigation.navigate("FocuScreen");
+  };
 
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-        <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
+          <Image
+            // source={{ uri: savedImage }}
+            style={{ width: "100%", height: "100%" }}
+          />
         </View>
       </View>
       <View style={styles.downPart}>
@@ -25,7 +34,7 @@ function ProecessImageScreen({ route , navigation}) {
           size={40}
           title="camera-retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={() => navigation.navigate('CameraScreen')}
+          onPress={pressRetakeImage}
         />
         <VectorTextBtn
           name="rotate-right"
@@ -43,6 +52,7 @@ function ProecessImageScreen({ route , navigation}) {
           name="page-next"
           size={40}
           title="Next"
+          onPress={pressNext}
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
         />
       </View>
