@@ -1,56 +1,60 @@
-import { StyleSheet, Text, View } from "react-native";
-import ReportScreen from "./screens/ReportScreen";
-import Screen from "./screens/Screen";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { firebase } from './config';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import LoginScreen from "./screens/LogInScreen";
+import SignUpScreen from './screens/SignUpScreen';
+import Dashboard from './screens/Dashboard';
+import OnboardingScreen from './screens/OnboardingScreen';
 import CameraScreen from './screens/CameraScreen';
 import HistoryScreen from "./screens/HistoryScreen";
 import ProecessImageScreen from "./screens/ProecessImageScreen";
-import OnboardingScreen from "./screens/OnboardingScreen";
 
 const Stack = createStackNavigator();
 
 function App() {
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  
+
+  if (initializing) return null;
+
+
+  if (!user) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ header: () => null }} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ header: () => null }} />
+          <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ header: () => null }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator >
-      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{header: () => null}}/>
-        <Stack.Screen name="CameraScreen" component={CameraScreen} options={{header: () => null}}/>
-        <Stack.Screen name="ProecessImageScreen" component={ProecessImageScreen} options={{header: () => null}}/>
-        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{header: () => null}} />
-        {/* Add more screens here */}
+      <Stack.Navigator>
+        <Stack.Screen name="Dashboard" component={Dashboard} options={{ header: () => null }} />
+        <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ header: () => null }} />
+        <Stack.Screen name="ProecessImageScreen" component={ProecessImageScreen} options={{ header: () => null }} />
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{ header: () => null }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 export default App;
-
-/*
-
-import { StyleSheet, Text, View } from "react-native";
-import AppButton from "./components/AppButton";
-import CameraScreen from "./screens/CameraScreen";
-import FocuScreen from "./screens/FocuScreen";
-import SignUpScreen from "./screens/SignUpScreen";
-import ProecessImageScreen from "./screens/ProecessImageScreen";
-import HistoryScreen from "./screens/HistoryScreen";
-import AddDataScreen from "./screens/AddDataScreen";
-import FetchTest from "./screens/FetchTest";
-import CameraTest from "./screens/CameraTest";
-import SplashScreen from "./screens/SplashScreen";
-import LogInScreen from "./screens/LogInScreen";
-
-export default function App() {
-  return <SplashScreen />;
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});*/

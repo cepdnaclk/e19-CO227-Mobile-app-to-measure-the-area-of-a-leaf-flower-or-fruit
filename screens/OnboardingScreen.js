@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native'; 
 
 import Onboarding from 'react-native-onboarding-swiper';
 
@@ -55,8 +55,14 @@ const OnboardingScreen = ({navigation}) => {
         NextButtonComponent={Next}
         DoneButtonComponent={Done}
         DotComponent={Dots}
-        onSkip={() => navigation.replace("CameraScreen")}
-        onDone={() => navigation.navigate("CameraScreen")}
+        onSkip={() => {
+          
+          navigation.navigate("LoginScreen"); // Navigate to LoginScreen
+        }}
+        onDone={() => {
+          
+          navigation.navigate("LoginScreen"); // Navigate to LoginScreen
+        }}
         pages={[
           
           {
