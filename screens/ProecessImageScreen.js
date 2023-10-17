@@ -1,23 +1,31 @@
 import React from "react";
 
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
+import { CommonActions } from '@react-navigation/native';
+
 
 import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-function ProecessImageScreen(props) {
+function ProecessImageScreen({ route , navigation}) {
+  const { savedImage } = route.params;
+
+
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
-        <View style={styles.imgContainer}></View>
+        <View style={styles.imgContainer}>
+        <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
+        </View>
       </View>
       <View style={styles.downPart}>
         <VectorTextBtn
-          name="reload"
+          name="camera-retake"
           size={40}
-          title="Retake"
+          title="camera-retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
+          onPress={() => navigation.navigate('CameraScreen')}
         />
         <VectorTextBtn
           name="rotate-right"
@@ -32,7 +40,7 @@ function ProecessImageScreen(props) {
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
         />
         <VectorTextBtn
-          name="page-next-outline"
+          name="page-next"
           size={40}
           title="Next"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}

@@ -18,7 +18,7 @@ import ListItem from "../components/ListItem";
 
 const API_ENDPOINT = "https://randomuser.me/api/?results=30";
 
-function HistoryScreen(props) {
+function HistoryScreen({navigation}) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
