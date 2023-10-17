@@ -1,31 +1,39 @@
-import React from "react";
-
-import { View, StyleSheet, Image } from "react-native";
-import { CommonActions } from "@react-navigation/native";
-
-import Screen from "./Screen";
-import colors from "../config/colors";
-import VectorTextBtn from "../components/VectorTextBtn";
+import React from 'react';
+import { View, StyleSheet, Image, Button } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
+import Screen from './Screen';
+import colors from '../config/colors';
+import VectorTextBtn from '../components/VectorTextBtn';
+import {firebase} from '../config'; // Import the Firebase library
 
 function ProecessImageScreen({ route, navigation }) {
-  // const { savedImage } = route.params;
+  const { savedImage } = route.params;
+  const currentUser = firebase.auth().currentUser; // Get the currently authenticated user
 
-  const pressRetakeImage = () => {
-    navigation.navigate("CameraScreen");
-  };
+  const uploadImageToFirebase = async (imageUri) => {
+    try {
+      // Get a reference to the Firestore collection where you want to store the user data
+      const userCollection = firebase.firestore().collection('users');
 
-  const pressNext = () => {
-    navigation.navigate("FocuScreen");
-  };
+      // Create a document with the user's UID as the document ID
+      const userDoc = userCollection.doc(currentUser.uid);
+
+      // Update the user document with the image URL
+      await userDoc.update({
+        imageUrl: imageUri,
+      });
+
+      console.log('Image URL updated in Firestore:', imageUri);
+    } catch (error) {
+      console.error('Error updating image URL in Firestore:', error);
+    }
+  }
 
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image
-            // source={{ uri: savedImage }}
-            style={{ width: "100%", height: "100%" }}
-          />
+          <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
         </View>
       </View>
       <View style={styles.downPart}>
@@ -34,7 +42,7 @@ function ProecessImageScreen({ route, navigation }) {
           size={40}
           title="camera-retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={pressRetakeImage}
+          onPress={() => navigation.navigate('CameraScreen')}
         />
         <VectorTextBtn
           name="rotate-right"
@@ -52,8 +60,12 @@ function ProecessImageScreen({ route, navigation }) {
           name="page-next"
           size={40}
           title="Next"
-          onPress={pressNext}
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
+          onPress={() => {
+            // Call the function to upload the image to Firebase
+            uploadImageToFirebase(savedImage);
+            // You can add additional navigation logic here
+          }}
         />
       </View>
     </Screen>
@@ -69,16 +81,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.color3,
   },
-
-  btn: {
-    padding: 10,
-    borderRadius: 15,
-  },
-
   downPart: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     flex: 0.15,
     paddingHorizontal: 10,
   },

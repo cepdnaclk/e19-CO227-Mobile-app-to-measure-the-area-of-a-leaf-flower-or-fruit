@@ -20,7 +20,7 @@ export default function CameraScreen({ navigation }) {
   const [isCameraActive, setIsCameraActive] = useState(true);
   const cameraRef = useRef(null);
 
-  const checkPermissions = async () => {
+    const checkPermissions = async () => {
     const cameraStatus = await Camera.requestCameraPermissionsAsync();
     const galleryStatus =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -47,7 +47,9 @@ export default function CameraScreen({ navigation }) {
       try {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
-        setImage(data.uri);
+  
+        // Pass the captured image URI as a parameter when navigating to ProecessImageScreen
+        navigation.navigate('ProecessImageScreen', { savedImage: data.uri });
       } catch (e) {
         console.log(e);
       }
@@ -61,14 +63,14 @@ export default function CameraScreen({ navigation }) {
         aspect: [4, 3],
         quality: 1,
       });
-
+  
       if (!result.canceled) {
         // Access the selected assets from the 'assets' array
         const selectedAsset = result.assets[0]; // Assuming you want the first selected asset
         const imageUri = selectedAsset.uri; // Use 'uri' from the selected asset
-
-        // Your code to handle the selected image
-        setImage(imageUri);
+  
+        // Pass the selected image URI as a parameter when navigating to ProecessImageScreen
+        navigation.navigate('ProecessImageScreen', { savedImage: imageUri });
       }
     }
   };
@@ -100,7 +102,7 @@ export default function CameraScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {!image ? (
+      
         <Screen color="black">
           <View style={styles.container}>
             {isCameraActive && hasCameraPermission && (
@@ -153,39 +155,8 @@ export default function CameraScreen({ navigation }) {
             </View>
           </View>
         </Screen>
-      ) : (
-        <Image source={{ uri: image }} style={styles.camera} />
-      )}
-      <View>
-        {image ? (
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingHorizontal: 50,
-            }}
-          >
-            <VectorTextBtn
-              name="reload"
-              size={40}
-              title="Retake"
-              color={"white"}
-              textStyle={{ fontSize: 8, paddingVertical: 0 }}
-              //onPress={handleRetake}
-              onPress={() => setImage(null)}
-            />
-            <VectorTextBtn
-              name="page-next-outline"
-              size={40}
-              title="Next"
-              color={"white"}
-              textStyle={{ fontSize: 8, paddingVertical: 0 }}
-              onPress={saveImage}
-            />
-          </View>
-        ) : null}
-      </View>
-    </View>
+        </View>
+      
   );
 }
 
