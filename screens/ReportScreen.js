@@ -25,10 +25,16 @@ import ImageButton from "../components/ImageButton";
 import AppText from "../components/AppText";
 import colors from "../config/colors";
 
-function ReportScreen(props) {
+function ReportScreen({ navigation }) {
+  // navigation
+
+  const pressGoBack = () => {
+    navigation.goBack();
+  };
+
   // for pdf
 
-  let logoImagePath = logo_black;
+  let logoImagePath = logo_black; //  images for html document
   let qrImage = qrImge1;
 
   let report_id = "ABC-2344";
@@ -153,7 +159,7 @@ function ReportScreen(props) {
             style={styles.imageBtn}
             image={require("../assets/back-to.png")}
             size={45}
-            onPress={() => console.log("back pressed")}
+            onPress={() => pressGoBack()}
           ></ImageButton>
           <View style={styles.head}>
             <AppText>Report</AppText>

@@ -6,7 +6,15 @@ import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-function ProecessImageScreen(props) {
+function ProecessImageScreen({ navigation }) {
+  const pressRetakeImage = () => {
+    navigation.navigate("CameraScreen");
+  };
+
+  const pressNext = () => {
+    navigation.navigate("FocusScreen");
+  };
+
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
@@ -18,6 +26,7 @@ function ProecessImageScreen(props) {
           size={40}
           title="Retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
+          onPress={pressRetakeImage}
         />
         <VectorTextBtn
           name="rotate-right"
@@ -35,6 +44,7 @@ function ProecessImageScreen(props) {
           name="page-next-outline"
           size={40}
           title="Next"
+          onPress={pressNext}
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
         />
       </View>

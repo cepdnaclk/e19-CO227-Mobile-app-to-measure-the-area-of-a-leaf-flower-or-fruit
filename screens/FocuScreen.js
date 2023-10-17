@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { View, StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
@@ -12,7 +12,28 @@ import { customStyles4 } from "./styles/styles";
 import VectorButton from "../components/VectorButton";
 import GetArea from "../components/GetArea";
 
-function FocuScreen(props) {
+import { SomeFunction } from "../BackgroundScripts/SomeFunction"; // Import the function
+import { AddData } from "../BackgroundScripts/AddData"; // Import the function
+
+function FocuScreen({ navigation }) {
+  const email = "kk@gmail.com";
+  const area = 23;
+  const name = "pip";
+  const latitude = 12.34;
+  const longitude = 23.4;
+
+  const pressMore = () => {
+    navigation.navigate("ReportScreen");
+  };
+
+  const pressBack = () => {
+    navigation.navigate("ProecessImageScreen");
+  };
+
+  useEffect(() => {
+    AddData(email, area, name, latitude, longitude);
+  }, []);
+
   return (
     <Screen color={colors.color3}>
       <View style={styles.container}>
@@ -20,7 +41,7 @@ function FocuScreen(props) {
           <ImageButton
             image={require("../assets/back-to.png")}
             size={42}
-            onPress={() => console.log("go back")}
+            onPress={() => pressBack()}
           ></ImageButton>
           <View style={styles.area}>
             <AppText>Area</AppText>
@@ -30,12 +51,12 @@ function FocuScreen(props) {
           <AppButton
             title={"More"}
             style={{ paddingHorizontal: 20, marginLeft: 10 }}
-            onPress={() => console.log("go to more")}
+            onPress={() => pressMore()}
           ></AppButton>
         </View>
-        <View style={styles.middleContainer}>  
-            {/*get area <GetArea {focus}/> comes here use usesatate for synchronizing*/}
-            <GetArea focus={100}/>
+        <View style={styles.middleContainer}>
+          {/*get area <GetArea {focus}/> comes here use usesatate for synchronizing*/}
+          <GetArea focus={100} />
         </View>
         <View style={styles.downContainer}>
           <AppText>Adjust to focus</AppText>

@@ -1,4 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
+
+
+import Navigator from "./routes/homeStack"
 import ReportScreen from "./screens/ReportScreen";
 import Screen from "./screens/Screen";
 import AppButton from "./components/AppButton";
@@ -14,7 +17,7 @@ import SplashScreen from "./screens/SplashScreen";
 import LogInScreen from "./screens/LogInScreen";
 
 export default function App() {
-  return <FocuScreen />;
+  return <Navigator />;
 }
 
 const styles = StyleSheet.create({

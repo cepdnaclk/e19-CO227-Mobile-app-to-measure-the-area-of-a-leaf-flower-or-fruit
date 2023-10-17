@@ -6,7 +6,15 @@ import ImageButton from "../components/ImageButton";
 import VectorButton from "../components/VectorButton";
 import Screen from "./Screen";
 
-function CameraScreen(props) {
+function CameraScreen({ navigation }) {
+  const pressHistoryScreen = () => {
+    navigation.navigate("HistoryScreen");
+  };
+
+  const pressCaptureImage = () => {
+    navigation.navigate("ProecessImageScreen");
+  };
+
   return (
     <Screen color="black">
       <View style={styles.container}>
@@ -17,6 +25,7 @@ function CameraScreen(props) {
             color="white"
             size={40}
             style={{ padding: 15 }}
+            onPress={pressHistoryScreen}
           ></VectorButton>
           <VectorButton
             name="image-outline"
@@ -28,6 +37,7 @@ function CameraScreen(props) {
             image={require("../assets/AgroCam.png")}
             size={70}
             style={{ padding: 15 }}
+            onPress={pressCaptureImage}
           ></ImageButton>
           <VectorButton
             name="account-settings-outline"
