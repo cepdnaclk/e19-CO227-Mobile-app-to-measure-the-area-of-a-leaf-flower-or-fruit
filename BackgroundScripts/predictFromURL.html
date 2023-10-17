@@ -1,0 +1,53 @@
+<div>Teachable Machine Image Model</div>
+<input type="text" id="image-url" placeholder="Enter Image URL">
+<button type="button" onclick="predictFromURL()">Predict from URL</button>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+    const URL = "https://teachablemachine.withgoogle.com/models/7c9p_26kp/";
+    let model, labelContainer, maxPredictions;
+
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        try {
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));
+            }
+
+            console.log("Model loaded successfully.");
+        } catch (error) {
+            console.error("Error loading the model:", error);
+        }
+    }
+
+    async function predictFromURL() {
+        const imageUrl = document.getElementById("image-url").value;
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = imageUrl;
+
+        img.onload = async function () {
+            try {
+                const prediction = await model.predict(img);
+                for (let i = 0; i < maxPredictions; i++) {
+                    const classPrediction =
+                        prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                    labelContainer.childNodes[i].innerHTML = classPrediction;
+                }
+
+                console.log("Prediction successful.");
+            } catch (error) {
+                console.error("Error predicting from URL:", error);
+            }
+        };
+    }
+
+    // Initialize the model when the page loads
+    window.onload = init;
+</script>

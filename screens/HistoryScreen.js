@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import { db } from "../config";
-import { ref, get, child } from "firebase/database";
+import { ref, get } from "firebase/database";
 
 import {
   TextInput,
@@ -17,15 +17,20 @@ import colors from "../config/colors";
 import AppText from "../components/AppText";
 import ListItemSeparator from "../components/ListItemSeparator";
 import ListItem from "../components/ListItem";
+import ImageButton from "../components/ImageButton";
 
 function HistoryScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
-
   const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState(null);
   const [dataArray, setDataArray] = useState(null);
 
+  const pressGoBack = () => {
+    navigation.navigate("CameraScreen");
+  };
+
+  // database operation.
   const postsRef = ref(db, "data");
 
   useEffect(() => {
@@ -39,11 +44,10 @@ function HistoryScreen({ navigation }) {
 
       .catch((error) => {
         console.error("Error" + error);
+        setError(error);
       });
   }, []);
 
-  console.log(dataArray);
-  //console.log(fetchedData);
   if (isLoading) {
     return (
       <View style={styles.indicatorView}>
@@ -68,17 +72,30 @@ function HistoryScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.container}>
-        <TextInput
-          placeholder="Enter search term"
-          style={styles.text}
-          clearButtonMode="always"
-          autoCapitalize="none"
-          value={searchQuery}
-          onChangeText={(query) => handleSearch(query)}
-        ></TextInput>
+        <View style={styles.topContainer}>
+          <ImageButton
+            style={styles.imageBtn}
+            image={require("../assets/back-to.png")}
+            size={45}
+            onPress={() => pressGoBack()}
+          ></ImageButton>
+          <TextInput
+            placeholder="Enter Name or ID of leaf"
+            style={styles.text}
+            clearButtonMode="always"
+            autoCapitalize="none"
+            value={searchQuery}
+            onChangeText={(query) => setSearchQuery(query)}
+          ></TextInput>
+        </View>
+
         <View style={styles.flatListContainer}>
           <FlatList
-            data={dataArray}
+            data={dataArray.filter(
+              (item) =>
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.id.includes(searchQuery)
+            )}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <ListItem
@@ -105,14 +122,23 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     flex: 1,
+    backgroundColor: colors.color4,
+  },
+
+  topContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
 
   text: {
-    height: 50,
-    borderColor: colors.lightGray,
+    height: 45,
+    borderColor: colors.colorTwo,
     paddingHorizontal: 15,
     borderWidth: 2,
-    borderRadius: 20,
+    borderRadius: 25,
+    flex: 1,
   },
 
   flatListContainer: {

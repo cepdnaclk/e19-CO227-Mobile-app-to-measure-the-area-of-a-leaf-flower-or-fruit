@@ -24,13 +24,14 @@ function App() {
         /> */}
 
         <Stack.Screen
-          name="ProecessImageScreen"
-          component={ProecessImageScreen}
-          options={{ header: () => null }}
-        />
-        <Stack.Screen
           name="HistoryScreen"
           component={HistoryScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="ProecessImageScreen"
+          component={ProecessImageScreen}
           options={{ header: () => null }}
         />
 
