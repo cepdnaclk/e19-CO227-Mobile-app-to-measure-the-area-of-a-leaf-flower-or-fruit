@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import LottieView from "lottie-react-native";
 import {firebase} from '../config';
-import validator from 'validator';
 
 import {
   View,
