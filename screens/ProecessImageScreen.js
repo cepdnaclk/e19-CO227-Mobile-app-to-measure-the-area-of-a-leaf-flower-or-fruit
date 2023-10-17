@@ -1,31 +1,31 @@
 import React from "react";
 
 import { View, StyleSheet, Image } from "react-native";
-import { CommonActions } from '@react-navigation/native';
-
+import { CommonActions } from "@react-navigation/native";
 
 import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-function ProecessImageScreen({ route , navigation}) {
-  const { savedImage } = route.params;
+function ProecessImageScreen({ route, navigation }) {
+  // const { savedImage } = route.params;
 
-
-function ProecessImageScreen({ navigation }) {
   const pressRetakeImage = () => {
     navigation.navigate("CameraScreen");
   };
 
   const pressNext = () => {
-    navigation.navigate("FocusScreen");
+    navigation.navigate("FocuScreen");
   };
 
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-        <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
+          <Image
+            // source={{ uri: savedImage }}
+            style={{ width: "100%", height: "100%" }}
+          />
         </View>
       </View>
       <View style={styles.downPart}>

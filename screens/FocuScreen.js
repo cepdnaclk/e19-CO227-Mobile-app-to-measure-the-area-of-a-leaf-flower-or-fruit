@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { View, StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
@@ -16,23 +16,41 @@ import { SomeFunction } from "../BackgroundScripts/SomeFunction"; // Import the 
 import { AddData } from "../BackgroundScripts/AddData"; // Import the function
 
 function FocuScreen({ navigation }) {
+  const [focusValue, setFocusValue] = useState(0);
+
+  const id = "-NgxNUSg4jhQHQx8tp7L";
   const email = "kk@gmail.com";
-  const area = 23;
-  const name = "pip";
-  const latitude = 12.34;
-  const longitude = 23.4;
+  const area = "23.45 cm ";
+  const name = "Bamboosa a";
+  const location = { latitude: 12.34, longitude: 23.4 };
+
+  const item2 = {
+    id: id,
+    email: email,
+    area: area,
+    name: name,
+    location: location,
+  };
 
   const pressMore = () => {
-    navigation.navigate("ReportScreen");
+    navigation.navigate("ReportScreen", { item2: item2 });
   };
 
   const pressBack = () => {
     navigation.navigate("ProecessImageScreen");
   };
 
-  useEffect(() => {
-    AddData(email, area, name, latitude, longitude);
-  }, []);
+  const incrementFocus = () => {
+    if (focusValue < 255) {
+      setFocusValue(Math.min(255, Math.round(focusValue + 1)));
+    }
+  };
+
+  const decrementFocus = () => {
+    if (focusValue > 0) {
+      setFocusValue(Math.min(255, Math.round(focusValue - 1)));
+    }
+  };
 
   return (
     <Screen color={colors.color3}>
@@ -67,15 +85,28 @@ function FocuScreen({ navigation }) {
               minimumTrackTintColor="#107500"
               thumbStyle={customStyles4.thumb}
               trackStyle={customStyles4.track}
+              value={focusValue}
+              minimumValue={0}
+              maximumValue={255}
+              onValueChange={(value) => setFocusValue(Math.round(value))}
+              onSlidingComplete={(value) => setFocusValue(Math.round(value))}
             ></Slider>
           </View>
 
           <View style={styles.buttonView}>
-            <VectorButton name="minus-box" size={40}></VectorButton>
+            <VectorButton
+              name="minus-box"
+              size={40}
+              onPress={decrementFocus}
+            ></VectorButton>
             <View style={styles.foucusValue}>
-              <AppText style={{ paddingHorizontal: 5 }}>97</AppText>
+              <AppText style={{ paddingHorizontal: 5 }}>{focusValue}</AppText>
             </View>
-            <VectorButton name="plus-box" size={40}></VectorButton>
+            <VectorButton
+              name="plus-box"
+              size={40}
+              onPress={incrementFocus}
+            ></VectorButton>
           </View>
         </View>
       </View>
