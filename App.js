@@ -53,15 +53,21 @@ function App() {
           component={OnboardingScreen}
           options={{ header: () => null }}
         /> */}
-        <Stack.Screen
-          name="CameraScreen"
-          component={CameraScreen}
-          options={{ header: () => null }}
-        />
 
         <Stack.Screen
           name="LogInScreen"
           component={LogInScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="FocuScreen"
+          component={FocuScreen}
+          options={{ header: () => null }}
+        />
+        <Stack.Screen
+          name="CameraScreen"
+          component={CameraScreen}
           options={{ header: () => null }}
         />
 
@@ -85,12 +91,6 @@ function App() {
         <Stack.Screen
           name="ProecessImageScreen"
           component={ProecessImageScreen}
-          options={{ header: () => null }}
-        />
-
-        <Stack.Screen
-          name="FocuScreen"
-          component={FocuScreen}
           options={{ header: () => null }}
         />
 
