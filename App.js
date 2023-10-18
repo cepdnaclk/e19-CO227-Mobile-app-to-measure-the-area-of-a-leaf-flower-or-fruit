@@ -48,10 +48,47 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{ header: () => null }} />
-        <Stack.Screen name="CameraScreen" component={CameraScreen} options={{ header: () => null }} />
-        <Stack.Screen name="ProecessImageScreen" component={ProecessImageScreen} options={{ header: () => null }} />
-        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{ header: () => null }} />
+        {/* <Stack.Screen
+          name="OnboardingScreen"
+          component={OnboardingScreen}
+          options={{ header: () => null }}
+        /> */}
+
+        <Stack.Screen
+          name="HistoryScreen"
+          component={HistoryScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="ProecessImageScreen"
+          component={ProecessImageScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="LogInScreen"
+          component={LogInScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="CameraScreen"
+          component={CameraScreen}
+          options={{ header: () => null }}
+        />
+        <Stack.Screen
+          name="FocuScreen"
+          component={FocuScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="ReportScreen"
+          component={ReportScreen}
+          options={{ header: () => null }}
+        />
+        {/* Add more screens here */}
       </Stack.Navigator>
     </NavigationContainer>
   );
