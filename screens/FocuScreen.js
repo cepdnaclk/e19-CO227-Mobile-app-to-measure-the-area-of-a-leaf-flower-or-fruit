@@ -65,9 +65,7 @@ function FocuScreen({ navigation }) {
             onPress={() => pressBack()}
           ></ImageButton>
           <View style={styles.area}>
-            <AppText>Area</AppText>
-            <View style={{ width: 1, height: 15, backgroundColor: "black" }} />
-            <AppText>45.67 cm</AppText>
+            <AppText style={styles.topic}>Change the focus</AppText>
           </View>
           <AppButton
             title={"More"}
@@ -79,39 +77,6 @@ function FocuScreen({ navigation }) {
           {/*get area <GetArea {focus}/> comes here use usesatate for synchronizing*/}
           <GetArea focus={focusValue} />
         </View>
-        <View style={styles.downContainer}>
-          <AppText>Adjust to focus</AppText>
-
-          <View style={styles.sliderView}>
-            <Slider
-              animateTransitions
-              minimumTrackTintColor="#107500"
-              thumbStyle={customStyles4.thumb}
-              trackStyle={customStyles4.track}
-              value={focusValue}
-              minimumValue={0}
-              maximumValue={255}
-              onValueChange={(value) => setFocusValue(Math.round(value))}
-              onSlidingComplete={(value) => setFocusValue(Math.round(value))}
-            ></Slider>
-          </View>
-
-          <View style={styles.buttonView}>
-            <VectorButton
-              name="minus-box"
-              size={40}
-              onPress={decrementFocus}
-            ></VectorButton>
-            <View style={styles.foucusValue}>
-              <AppText style={{ paddingHorizontal: 5 }}>{focusValue}</AppText>
-            </View>
-            <VectorButton
-              name="plus-box"
-              size={40}
-              onPress={incrementFocus}
-            ></VectorButton>
-          </View>
-        </View>
       </View>
     </Screen>
   );
@@ -120,6 +85,9 @@ function FocuScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  topic: {
+    alignSelf: "center",
   },
 
   upContainer: {
@@ -140,6 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "center",
     flex: 1,
   },
 
