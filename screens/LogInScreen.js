@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import LottieView from "lottie-react-native";
 import { useNavigation } from "@react-navigation/native";
-import {firebase} from '../config';
+import { firebase } from "../config";
 
 import {
   View,
@@ -21,20 +21,19 @@ import AppButton from "../components/AppButton";
 import AppTextInput from "../components/AppTextInput";
 import symbolicateStackTrace from "react-native/Libraries/Core/Devtools/symbolicateStackTrace";
 
-const LogInScreen =()=> {
+const LogInScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   loginUser = async (email, password) => {
-    try{
-      await firebase.auth().signInWithEmailAndPassword(email,password)
-    } catch (error){
-      alert(error.message)
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      alert(error.message);
     }
-  }
-
+  };
 
   return (
     <Screen color={colors.color4}>
@@ -57,27 +56,44 @@ const LogInScreen =()=> {
           <AppTextInput
             style={styles.input}
             onChangeText={(email) => setEmail(email)}
-            autoCorrect = {false}
+            autoCorrect={false}
             placeholder="Email"
           />
 
           <AppTextInput
             style={styles.input}
             onChangeText={(password) => setPassword(password)}
-            autoCorrect = {false}
+            autoCorrect={false}
             placeholder="Password"
           />
 
           <AppButton
             title="Login"
             style={styles.signBtn}
-            onPress={() => loginUser(email, password)}
+            onPress={() => {
+              loginUser(email, password);
+              navigation.navigate("CameraScreen");
+            }}
           ></AppButton>
           <View style={styles.goToLoginContainer}>
             <AppText style={styles.goToLoginText}>
               Don't have an account?
             </AppText>
-            <TouchableOpacity style={styles.goToLogin} onPress={()=> navigation.navigate("SignUpScreen")} ><Text style={{color:'#178517',textDecorationLine: "underline", fontWeight:"bold"}}> Register</Text></TouchableOpacity>
+            <TouchableOpacity
+              style={styles.goToLogin}
+              onPress={() => navigation.navigate("SignUpScreen")}
+            >
+              <Text
+                style={{
+                  color: "#178517",
+                  textDecorationLine: "underline",
+                  fontWeight: "bold",
+                }}
+              >
+                {" "}
+                Register
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -90,7 +106,7 @@ const LogInScreen =()=> {
       </View>
     </Screen>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: { backgroundColor: colors.color, flex: 1 },
