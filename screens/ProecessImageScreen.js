@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Image, ActivityIndicator } from "react-native";
+import React from "react";
+
+import { View, StyleSheet, Image } from "react-native";
+import { CommonActions } from "@react-navigation/native";
+
 import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
+import GetA4 from "../components/GetA4";
 
 function ProecessImageScreen({ route, navigation }) {
-  const { firebaseImage } = route.params;
+  const { savedImage } = route.params;
 
-  console.log(firebaseImage);
-  const base64 = "";
+  console.log(savedImage);
 
   const goNext = () => {
-    navigation.navigate("FocuScreen", { base64: base64 });
+    navigation.navigate("FocuScreen");
   };
 
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image
-            source={{ uri: firebaseImage }}
-            style={{ width: "100%", height: "100%" }}
-          />
+          {/*<Image source={{ uri: savedImage }} style={{ width: '50%', height: '50%' }} />*/}
+          <GetA4 image={savedImage} />
         </View>
       </View>
       <View style={styles.downPart}>
@@ -49,7 +50,7 @@ function ProecessImageScreen({ route, navigation }) {
           size={40}
           title="Next"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={() => goNext()}
+          onPress={goNext}
         />
       </View>
     </Screen>
@@ -61,16 +62,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.color4,
   },
-
-  indicatorView: {
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-  },
   imgContainer: {
     flex: 1,
+    paddingHorizontal: 10,
     backgroundColor: colors.color3,
   },
+
+  btn: {
+    padding: 10,
+    borderRadius: 15,
+  },
+
   downPart: {
     flexDirection: "row",
     justifyContent: "space-around",

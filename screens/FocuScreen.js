@@ -12,19 +12,15 @@ import { customStyles4 } from "./styles/styles";
 import VectorButton from "../components/VectorButton";
 import GetArea from "../components/GetArea";
 
-import { SomeFunction } from "../BackgroundScripts/SomeFunction"; // Import the function
-import { AddData } from "../BackgroundScripts/AddData"; // Import the function
-
-function FocuScreen({ navigation, route }) {
+function FocuScreen({ navigation }) {
   const [focusValue, setFocusValue] = useState(0);
-  console.log(route.params.base64);
+  // console.log(route.params.base64);
 
   const id = "-NgxNUSg4jhQHQx8tp7L";
   const email = "kk@gmail.com";
   const area = "23.45 cm ";
   const name = "Bamboosa a";
   const location = { latitude: 12.34, longitude: 23.4 };
-
   const item2 = {
     id: id,
     email: email,
@@ -42,16 +38,22 @@ function FocuScreen({ navigation, route }) {
   };
 
   const incrementFocus = () => {
+    // Check if the value is already at the maximum
     if (focusValue < 255) {
       setFocusValue(Math.min(255, Math.round(focusValue + 1)));
     }
   };
 
   const decrementFocus = () => {
+    // Check if the value is already at the minimum
     if (focusValue > 0) {
       setFocusValue(Math.min(255, Math.round(focusValue - 1)));
     }
   };
+
+  // useEffect(() => {
+  //   AddData(email, area, name, latitude, longitude);
+  // }, []);
 
   return (
     <Screen color={colors.color3}>
@@ -75,7 +77,7 @@ function FocuScreen({ navigation, route }) {
         </View>
         <View style={styles.middleContainer}>
           {/*get area <GetArea {focus}/> comes here use usesatate for synchronizing*/}
-          <GetArea focus={100} />
+          <GetArea focus={focusValue} />
         </View>
         <View style={styles.downContainer}>
           <AppText>Adjust to focus</AppText>

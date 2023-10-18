@@ -13,24 +13,25 @@ import OnboardingScreen from "./screens/OnboardingScreen";
 import CameraScreen from "./screens/CameraScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import ProecessImageScreen from "./screens/ProecessImageScreen";
+import SplashScreen from "./screens/SplashScreen";
 
 const Stack = createStackNavigator();
 
 function App() {
-  // const [initializing, setInitializing] = useState(true);
-  // const [user, setUser] = useState();
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
 
-  // function onAuthStateChanged(user) {
-  //   setUser(user);
-  //   if (initializing) setInitializing(false);
-  // }
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
 
-  // useEffect(() => {
-  //   const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
-  //   return subscriber;
-  // }, []);
+  useEffect(() => {
+    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
 
-  // if (initializing) return null;
+  if (initializing) return null;
 
   // if (!user) {
   //   return (
@@ -52,7 +53,6 @@ function App() {
           component={OnboardingScreen}
           options={{ header: () => null }}
         /> */}
-
         <Stack.Screen
           name="CameraScreen"
           component={CameraScreen}
@@ -60,20 +60,31 @@ function App() {
         />
 
         <Stack.Screen
+          name="LogInScreen"
+          component={LogInScreen}
+          options={{ header: () => null }}
+        />
+
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
+          options={{ header: () => null }}
+        />
+        <Stack.Screen
           name="HistoryScreen"
           component={HistoryScreen}
           options={{ header: () => null }}
         />
 
         <Stack.Screen
-          name="ProecessImageScreen"
-          component={ProecessImageScreen}
+          name="SplashScreen"
+          component={SplashScreen}
           options={{ header: () => null }}
         />
 
         <Stack.Screen
-          name="LogInScreen"
-          component={LogInScreen}
+          name="ProecessImageScreen"
+          component={ProecessImageScreen}
           options={{ header: () => null }}
         />
 

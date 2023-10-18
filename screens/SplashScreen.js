@@ -6,74 +6,152 @@ import {
   Animated,
   Text,
 } from "react-native";
-import AppTextInput from "../components/AppTextInput";
+
+import AppText from "../components/AppText";
 
 function SplashScreen(props) {
-  const leftValue = useState(new Animated.Value(240))[0]; // Start at 200 (right corner)
-  const topValue = useState(new Animated.Value(0))[0];
-  const rotationValue = useState(new Animated.Value(0))[0];
-  const [displayedLetters, setDisplayedLetters] = useState([]);
+  const [leftValue] = useState(new Animated.Value(300)); // Start at 200 (right corner)
+  const [topValue] = useState(new Animated.Value(0));
+  const rotationValue = useState(new Animated.Value(-90))[0];
+  const [displayedLetterA, setDisplayedLetterA] = useState(null);
+  const [displayedLetterG, setDisplayedLetterG] = useState(null);
+  const [displayedLetterR, setDisplayedLetterR] = useState(null);
+  const [displayedLetterO, setDisplayedLetterO] = useState(null);
+  const [displayedLetterC, setDisplayedLetterC] = useState(null);
+  const [displayedLetterM, setDisplayedLetterM] = useState(null);
+
+  const [displayedLetterA2, setDisplayedLetterA2] = useState(null);
 
   const interpolatedRotation = rotationValue.interpolate({
     inputRange: [0, 90],
     outputRange: ["0deg", "90deg"],
   });
 
+  function moveObject() {
+    // Animated.spring(topValue, {
+    //   toValue: 300,
+    //   delay: 100,
+    //   // friction: 3,
+    //   // tension: 100,
+    //   // bounciness: 2,
+    //   // speed: 100,
+    //   stiffness: 2000,
+    //   damping: 30,
+    //   mass: 2,
+    //   useNativeDriver: true,
+    // }).start();
+
+    const fullAnime = Animated.sequence([
+      Animated.parallel([
+        Animated.timing(leftValue, {
+          toValue: 15, // Move to the left (position 0)
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(rotationValue, {
+          toValue: 0, // Rotate by 90 degrees
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]);
+
+    // Start the parallel animation
+    fullAnime.start();
+  }
+
   // Add a listener to leftValue
   useEffect(() => {
-    leftValue.addListener(({ value }) => {
+    const listener = leftValue.addListener(({ value }) => {
       const newDisplayedLetter = getDisplayedLetter(value);
-      if (
-        newDisplayedLetter &&
-        !displayedLetters.find((letter) => letter.letter === newDisplayedLetter)
-      ) {
-        setDisplayedLetters([
-          ...displayedLetters,
-          { letter: newDisplayedLetter, position: value },
-        ]);
+      if (newDisplayedLetter == "A") {
+        setDisplayedLetterA(newDisplayedLetter);
+      }
+      if (newDisplayedLetter == "g") {
+        setDisplayedLetterG(newDisplayedLetter);
+      }
+      if (newDisplayedLetter == "r") {
+        setDisplayedLetterR(newDisplayedLetter);
+      }
+      if (newDisplayedLetter == "o") {
+        setDisplayedLetterO(newDisplayedLetter);
+      }
+      if (newDisplayedLetter == "C") {
+        setDisplayedLetterC(newDisplayedLetter);
+      }
+      if (newDisplayedLetter == "a") {
+        setDisplayedLetterA2(newDisplayedLetter);
+      }
+      if (newDisplayedLetter == "m") {
+        setDisplayedLetterM(newDisplayedLetter);
       }
     });
 
     // Cleanup the listener when the component unmounts
-    return () => leftValue.removeAllListeners();
-  }, [leftValue, displayedLetters]);
+  }, [leftValue]);
 
+  // Implement your function to get the displayed letter based on the value
   function getDisplayedLetter(value) {
-    if (value <= 40) {
-      return "K";
-    } else if (value <= 140) {
-      console.log("dione");
-      return "L";
-    } else if (value <= 70) {
-      return "N";
+    if (value >= 30 && value < 60) {
+      return "A";
     }
+    if (value >= 60 && value < 90) {
+      return "g";
+    }
+    if (value >= 90 && value < 120) {
+      return "r";
+    }
+    if (value >= 120 && value < 150) {
+      return "o";
+    }
+    if (value >= 150 && value < 180) {
+      return "C";
+    }
+    if (value >= 180 && value < 210) {
+      return "a";
+    }
+    if (value >= 210 && value < 240) {
+      return "m";
+    }
+
     return "";
   }
-
-  function moveObject() {
-    // Define the first animation
-    const firstAnimation = Animated.timing(leftValue, {
-      toValue: 0, // Move to the left (position 0)
-      duration: 1000,
-      useNativeDriver: true,
-    });
-
-    // Start the first animation
-    firstAnimation.start();
-  }
-
+  console.log(leftValue);
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <AppTextInput></AppTextInput>
+        <View style={styles.letterCont}>
+          {displayedLetterA && (
+            <AppText style={styles.textA}>{displayedLetterA}</AppText>
+          )}
+          {displayedLetterG && (
+            <AppText style={styles.textG}>{displayedLetterG}</AppText>
+          )}
+          {displayedLetterR && (
+            <AppText style={styles.textR}>{displayedLetterR}</AppText>
+          )}
+          {displayedLetterO && (
+            <AppText style={styles.textO}>{displayedLetterO}</AppText>
+          )}
+          {displayedLetterC && (
+            <AppText style={styles.textC}>{displayedLetterC}</AppText>
+          )}
+          {displayedLetterA2 && (
+            <AppText style={styles.textA2}>{displayedLetterA2}</AppText>
+          )}
+          {displayedLetterM && (
+            <AppText style={styles.textM}>{displayedLetterM}</AppText>
+          )}
+        </View>
+
         <Animated.Image
           source={require("../assets/logo-black.png")}
           style={{
-            height: 100,
-            width: 100,
+            height: 90,
+            width: 90,
             position: "absolute",
             zIndex: 2,
-            left: 20, // Start at the right corner
+            left: 35, // Start at the right corner
             transform: [
               { translateY: topValue },
               { translateX: leftValue },
@@ -90,143 +168,66 @@ function SplashScreen(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  logoContainer: {
-    marginTop: 100,
+  container: { flex: 1, alignItems: "center", justifyContent: "center" },
+
+  letterCont: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
-  revealText: {
-    fontSize: 30,
+  logoContainer: {
+    marginTop: 300,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingRight: 20,
+  },
+  textA: {
+    marginTop: 300,
+    paddingRight: 60,
     position: "absolute",
+    fontSize: 33,
   },
+  textG: {
+    marginTop: 300,
+    paddingRight: 0,
+    position: "absolute",
+    fontSize: 33,
+  },
+  textR: {
+    marginTop: 300,
+    paddingLeft: 50,
+    position: "absolute",
+    fontSize: 33,
+  },
+  textO: {
+    marginTop: 300,
+    paddingLeft: 97,
+    position: "absolute",
+    fontSize: 35,
+  },
+  textC: {
+    marginTop: 300,
+    paddingLeft: 160,
+    position: "absolute",
+    fontSize: 33,
+  },
+  textA2: {
+    marginTop: 300,
+    paddingLeft: 222,
+    position: "absolute",
+    fontSize: 33,
+  },
+  textM: {
+    marginTop: 300,
+    paddingLeft: 290,
+    position: "absolute",
+    fontSize: 33,
+  },
+
   click: {
-    marginTop: 200,
+    marginTop: 300,
   },
 });
 
 export default SplashScreen;
-
-// import React, { useState, useEffect } from "react";
-
-// import {
-//   View,
-//   StyleSheet,
-//   TouchableOpacity,
-//   Animated,
-//   Text,
-// } from "react-native";
-
-// function SplashScreen(props) {
-//   const leftValue = useState(new Animated.Value(0))[0];
-//   const topValue = useState(new Animated.Value(0))[0];
-//   const rotationValue = useState(new Animated.Value(0))[0];
-
-//   const interpolatedRotation = rotationValue.interpolate({
-//     inputRange: [0, 90],
-//     outputRange: ["0deg", "90deg"],
-//   });
-
-//   function moveObject() {
-//     // Define the first animation
-//     const firstAnimation = Animated.timing(leftValue, {
-//       toValue: 200,
-//       duration: 1000,
-//       useNativeDriver: true,
-//     });
-
-//     // Start the first animation
-//     firstAnimation.start();
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={styles.logoContainer}>
-//         {leftValue > 100 && <Text style={styles.revealText}>R</Text>}
-//         <Animated.Image
-//           source={require("../assets/logo-black.png")}
-//           style={{
-//             height: 100,
-//             width: 100,
-//             position: "absolute",
-//             zIndex: 2,
-//             marginLeft: 20,
-//             transform: [
-//               { translateY: topValue },
-//               { translateX: leftValue },
-//               { rotate: interpolatedRotation },
-//             ],
-//           }}
-//         ></Animated.Image>
-//       </View>
-//       <TouchableOpacity onPress={moveObject} style={styles.click}>
-//         <Text>Click me</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {},
-
-//   logoContainer: {
-//     marginTop: 100,
-//     flexDirection: "row",
-//     alignItems: "center",
-//   },
-
-//   revealText: {
-//     fontSize: 30,
-//     position: "absolute",
-//     marginLeft: 20,
-//   },
-
-//   click: {
-//     marginTop: 200,
-//   },
-// });
-
-// export default SplashScreen;
-
-// animations 1
-
-// function SplashScreen(props) {
-//   const [value] = useState(new Animated.ValueXY({ x: 0, y: 0 }));
-
-// // more points we have animation more smoother.
-
-//   const moveObject = () => {
-//     Animated.timing(value, {
-//       toValue: { x: 100, y: 100 },
-//       duration: 1000,
-//       useNativeDriver: false,
-//     }).start();
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Animated.View style={value.getLayout()}>
-//         <View style={styles.animeBall}></View>
-//       </Animated.View>
-//       <TouchableOpacity onPress={moveObject}>
-//         <Text>Click me</Text>
-//       </TouchableOpacity>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignContent: "center",
-//     justifyContent: "center",
-//   },
-
-//   animeBall: {
-//     height: 100,
-//     width: 100,
-//     backgroundColor: "black",
-//   },
-// });
-
-// export default SplashScreen;
