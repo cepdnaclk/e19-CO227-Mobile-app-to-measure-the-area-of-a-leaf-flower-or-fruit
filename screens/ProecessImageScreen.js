@@ -1,20 +1,17 @@
-import React from "react";
-
-import { View, StyleSheet, Image } from "react-native";
-import { CommonActions } from "@react-navigation/native";
-
+import React, { useState } from "react";
+import { View, StyleSheet, Image, ActivityIndicator } from "react-native";
 import Screen from "./Screen";
 import colors from "../config/colors";
 import VectorTextBtn from "../components/VectorTextBtn";
 
 function ProecessImageScreen({ route, navigation }) {
-  const { savedImage } = route.params;
+  const { firebaseImage } = route.params;
 
-  const goToNext = () => {
-    navigation.navigate("Predict", {
-      imageURL:
-        "https://firebasestorage.googleapis.com/v0/b/greenapp-d4938.appspot.com/o/leef.jpg?alt=media&token=f181afca-7a91-4f86-baf4-5ec83b5f246f&_gl=1*lbyq5b*_ga*MTEzNzI0MTQxOS4xNjk2MTQzNjIz*_ga_CW55HF8NVT*MTY5NzYwMzA3Ni4xNy4xLjE2OTc2MDM3NDUuNDguMC4w", // Pass the local image path to Predict screen
-    });
+  console.log(firebaseImage);
+  const base64 = "";
+
+  const goNext = () => {
+    navigation.navigate("FocuScreen", { base64: base64 });
   };
 
   return (
@@ -22,7 +19,7 @@ function ProecessImageScreen({ route, navigation }) {
       <View style={styles.container}>
         <View style={styles.imgContainer}>
           <Image
-            source={{ uri: savedImage }}
+            source={{ uri: firebaseImage }}
             style={{ width: "100%", height: "100%" }}
           />
         </View>
@@ -51,8 +48,8 @@ function ProecessImageScreen({ route, navigation }) {
           name="page-next"
           size={40}
           title="Next"
-          onPress={goToNext}
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
+          onPress={() => goNext()}
         />
       </View>
     </Screen>
@@ -64,16 +61,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.color4,
   },
+
+  indicatorView: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
   imgContainer: {
     flex: 1,
     backgroundColor: colors.color3,
   },
-
-  btn: {
-    padding: 10,
-    borderRadius: 15,
-  },
-
   downPart: {
     flexDirection: "row",
     justifyContent: "space-around",

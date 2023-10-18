@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
+import { db } from "../config";
+import { ref, get } from "firebase/database";
 
 import {
   TextInput,
@@ -15,41 +17,36 @@ import colors from "../config/colors";
 import AppText from "../components/AppText";
 import ListItemSeparator from "../components/ListItemSeparator";
 import ListItem from "../components/ListItem";
+import ImageButton from "../components/ImageButton";
 
-const API_ENDPOINT = "https://randomuser.me/api/?results=30";
-
-function HistoryScreen({navigation}) {
+function HistoryScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const [fullData, setFullData] = useState([]);
+  const [dataArray, setDataArray] = useState(null);
+
+  const pressGoBack = () => {
+    navigation.navigate("CameraScreen");
+  };
+
+  // database operation.
+  const postsRef = ref(db, "data");
 
   useEffect(() => {
-    setIsLoading(true);
-    fetchData(API_ENDPOINT);
+    get(postsRef)
+      .then((snapshot) => {
+        setDataArray(
+          Object.entries(snapshot.val()).map(([id, item]) => ({ id, ...item }))
+        );
+        setIsLoading(false);
+      })
+
+      .catch((error) => {
+        console.error("Error" + error);
+        setError(error);
+      });
   }, []);
-
-  const fetchData = async (url) => {
-    try {
-      const response = await fetch(url);
-      const json = await response.json();
-      setData(json.results);
-      setIsLoading(false);
-      const formattedJson = JSON.stringify(json.results, null, 2);
-      console.log(formattedJson);
-    } catch (error) {
-      setError(error);
-      console.log(error);
-    }
-  };
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-  };
-
-  // show indicator while data is loading
 
   if (isLoading) {
     return (
@@ -75,23 +72,42 @@ function HistoryScreen({navigation}) {
   return (
     <Screen>
       <View style={styles.container}>
-        <TextInput
-          placeholder="Enter search term"
-          style={styles.text}
-          clearButtonMode="always"
-          autoCapitalize="none"
-          value={searchQuery}
-          onChangeText={(query) => handleSearch(query)}
-        ></TextInput>
+        <View style={styles.topContainer}>
+          <ImageButton
+            style={styles.imageBtn}
+            image={require("../assets/back-to.png")}
+            size={45}
+            onPress={() => pressGoBack()}
+          ></ImageButton>
+          <TextInput
+            placeholder="Enter Name or ID of leaf"
+            style={styles.text}
+            clearButtonMode="always"
+            autoCapitalize="none"
+            value={searchQuery}
+            onChangeText={(query) => setSearchQuery(query)}
+          ></TextInput>
+        </View>
+
         <View style={styles.flatListContainer}>
           <FlatList
-            data={data}
-            keyExtractor={(item) => item.login.username}
+            data={dataArray.filter(
+              (item) =>
+                item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                item.id.includes(searchQuery)
+            )}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <ListItem
-                firstName={item.name.first}
-                email={item.email}
-                imageUrl={item.picture.thumbnail}
+                onPress={() =>
+                  navigation.navigate("ReportScreen", {
+                    item: item,
+                  })
+                }
+                firstName={item.name}
+                id={item.id && item.id.substring(1).toUpperCase()}
+
+                // imageUrl={item.picture.\\\\\}
               ></ListItem>
             )}
             ItemSeparatorComponent={ListItemSeparator}
@@ -106,14 +122,23 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     flex: 1,
+    backgroundColor: colors.color4,
+  },
+
+  topContainer: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
   },
 
   text: {
-    height: 50,
-    borderColor: colors.lightGray,
+    height: 45,
+    borderColor: colors.colorTwo,
     paddingHorizontal: 15,
     borderWidth: 2,
-    borderRadius: 20,
+    borderRadius: 25,
+    flex: 1,
   },
 
   flatListContainer: {

@@ -8,7 +8,7 @@ function ListItemSeparator(props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.black,
     height: 1,
     width: "90%",
     alignSelf: "center",

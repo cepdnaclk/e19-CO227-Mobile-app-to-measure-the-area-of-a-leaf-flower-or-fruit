@@ -1,17 +1,27 @@
-import { StyleSheet, Text, View, Image, Button} from "react-native";
-import { Camera } from 'expo-camera';
-import React, { useState, useEffect, useRef } from 'react';
-import * as MediaLibrary from 'expo-media-library';
-import * as ImagePicker from 'expo-image-picker';
-import { useFocusEffect } from '@react-navigation/native';
-import { windowWidth, windowHeight } from '../components/Dimetions';
-import colors from '../config/colors';
-import ImageButton from '../components/ImageButton';
-import VectorButton from '../components/VectorButton';
-import Screen from './Screen';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  ActivityIndicator,
+} from "react-native";
+import { Camera } from "expo-camera";
+import React, { useState, useEffect, useRef } from "react";
+import * as MediaLibrary from "expo-media-library";
+import * as ImagePicker from "expo-image-picker";
+import { useFocusEffect } from "@react-navigation/native";
+import { windowWidth, windowHeight } from "../components/Dimetions";
+import colors from "../config/colors";
+import ImageButton from "../components/ImageButton";
+import VectorButton from "../components/VectorButton";
+import Screen from "./Screen";
 import VectorTextBtn from "../components/VectorTextBtn";
 
-export default function CameraScreen({navigation}) {
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../config";
+
+export default function CameraScreen({ navigation }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [galleryPermission, setGalleryPermission] = useState(null);
   const [image, setImage] = useState(null);
@@ -20,11 +30,14 @@ export default function CameraScreen({navigation}) {
   const [isCameraActive, setIsCameraActive] = useState(true);
   const cameraRef = useRef(null);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const checkPermissions = async () => {
     const cameraStatus = await Camera.requestCameraPermissionsAsync();
-    const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    setHasCameraPermission(cameraStatus.status === 'granted');
-    setGalleryPermission(galleryStatus.status === 'granted');
+    const galleryStatus =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    setHasCameraPermission(cameraStatus.status === "granted");
+    setGalleryPermission(galleryStatus.status === "granted");
   };
 
   useEffect(() => {
@@ -41,18 +54,54 @@ export default function CameraScreen({navigation}) {
     }, [])
   );
 
+  const uploadImageToFirebaseStorage = async (localUri) => {
+    try {
+      // Get the current date and time
+      const currentDate = new Date();
+
+      // Format the date and time as a string without special characters
+      const formattedDateTime = currentDate.toISOString().replace(/[-T:]/g, "");
+
+      // Generate a unique filename using the formatted date and time
+      const uniqueFileName =
+        formattedDateTime + "_" + Math.random().toString(36).substring(2, 8);
+
+      // Get a reference to your Firebase Cloud Storage
+      const storageRef = ref(storage, "your-storage-folder/" + uniqueFileName);
+
+      // Convert the local image URI to a Blob
+      const response = await fetch(localUri);
+      const blob = await response.blob();
+
+      // Upload the image to Firebase Cloud Storage
+      const snapshot = await uploadBytes(storageRef, blob);
+
+      // Get the public download URL for the uploaded image
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
+      console.log("Image uploaded to Firebase Cloud Storage:", downloadURL);
+      return downloadURL;
+    } catch (error) {
+      console.error("Error uploading image to Firebase Cloud Storage:", error);
+    }
+  };
+
   const takePicture = async () => {
     if (cameraRef.current) {
       try {
         const data = await cameraRef.current.takePictureAsync();
-        console.log(data);
-        setImage(data.uri);
+        console.log(data.uri);
+        setIsLoading(true);
+        const downloadURL = await uploadImageToFirebaseStorage(data.uri);
+        navigation.navigate("ProecessImageScreen", {
+          firebaseImage: downloadURL,
+        });
       } catch (e) {
         console.log(e);
       }
     }
   };
-  
+
   const pickImage = async () => {
     if (galleryPermission) {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -65,9 +114,9 @@ export default function CameraScreen({navigation}) {
         // Access the selected assets from the 'assets' array
         const selectedAsset = result.assets[0]; // Assuming you want the first selected asset
         const imageUri = selectedAsset.uri; // Use 'uri' from the selected asset
-  
-        // Your code to handle the selected image
-        setImage(imageUri);
+
+        // Pass the selected image URI as a parameter when navigating to ProecessImageScreen
+        navigation.navigate("ProecessImageScreen", { savedImage: imageUri });
       }
     }
   };
@@ -86,7 +135,7 @@ export default function CameraScreen({navigation}) {
         await MediaLibrary.createAssetAsync(image);
         //alert('Picture saved!');
         setImage(null);
-        navigation.navigate('ProecessImageScreen', { savedImage: image });
+        navigation.navigate("ProecessImageScreen", { savedImage: image });
       } catch (e) {
         console.log(e);
       }
@@ -94,90 +143,74 @@ export default function CameraScreen({navigation}) {
   };
 
   if (hasCameraPermission === false) {
-    return <Text>No access to camera</Text>
+    return <Text>No access to camera</Text>;
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.indicatorView}>
+        <ActivityIndicator
+          size="large"
+          color={colors.color2}
+        ></ActivityIndicator>
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
-      {!image ? (
-        <Screen color="black">
-          <View style={styles.container}>
-            {isCameraActive && hasCameraPermission && (
-              <Camera
-                ref={cameraRef}
-                style={{ width: windowWidth, height: windowHeight - 150, marginTop: -75 }}
-                type={cameraType}
-              />
-            )}
-            <View style={styles.menu}>
-              <VectorButton
-                name="history"
-                color="white"
-                size={40}
-                style={{ padding: 15 }}
-                onPress={() => navigation.navigate('HistoryScreen')}
-              ></VectorButton>
-              <VectorButton
-                name="image-outline"
-                color="white"
-                size={40}
-                style={{ padding: 10 }}
-                onPress={pickImage} disabled={!galleryPermission}
-              ></VectorButton>
-              <ImageButton
-                image={require('../assets/AgroCam.png')}
-                size={70}
-                style={{ padding: 15 }}
-                onPress={takePicture}
-                disabled={!hasCameraPermission}
-              ></ImageButton>
-              <VectorButton
-                name="account-settings-outline"
-                color="white"
-                size={40}
-                style={{ padding: 15 }}
-              ></VectorButton>
-              <VectorButton
-                name="camera-flip-outline"
-                color="white"
-                size={40}
-                style={{ padding: 15 }}
-                onPress={toggleCameraType}
-              ></VectorButton>
-            </View>
+      <Screen color="black">
+        <View style={styles.container}>
+          {isCameraActive && hasCameraPermission && (
+            <Camera
+              ref={cameraRef}
+              style={{
+                width: windowWidth,
+                height: windowHeight - 150,
+                marginTop: -75,
+              }}
+              type={cameraType}
+            />
+          )}
+          <View style={styles.menu}>
+            <VectorButton
+              name="history"
+              color="white"
+              size={40}
+              style={{ padding: 15 }}
+              onPress={() => navigation.navigate("HistoryScreen")}
+            ></VectorButton>
+            <VectorButton
+              name="image-outline"
+              color="white"
+              size={40}
+              style={{ padding: 10 }}
+              onPress={pickImage}
+              disabled={!galleryPermission}
+            ></VectorButton>
+            <ImageButton
+              image={require("../assets/AgroCam.png")}
+              size={70}
+              style={{ padding: 15 }}
+              onPress={takePicture}
+              disabled={!hasCameraPermission}
+            ></ImageButton>
+            <VectorButton
+              name="account-settings-outline"
+              color="white"
+              size={40}
+              style={{ padding: 15 }}
+            ></VectorButton>
+            <VectorButton
+              name="camera-flip-outline"
+              color="white"
+              size={40}
+              style={{ padding: 15 }}
+              onPress={toggleCameraType}
+            ></VectorButton>
           </View>
-        </Screen>
-      ) : (
-        <Image source={{ uri: image }} style={styles.camera} />
-      )}
-      <View>
-        {image ? (
-          <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 50
-          }}>
-            <VectorTextBtn
-          name="reload"
-          size={40}
-          title="Retake"
-          color={"white"}
-          textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          //onPress={handleRetake}
-          onPress={() => setImage(null)}
-        />
-        <VectorTextBtn
-          name="page-next-outline"
-          size={40}
-          title="Next"
-          color={"white"}
-          textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={saveImage}
-        />
-        
-          </View>
-        ): null}
-      </View>
+        </View>
+      </Screen>
     </View>
   );
 }
@@ -187,17 +220,22 @@ const styles = StyleSheet.create({
   camera: {
     borderWidth: 150,
     flex: 1,
-    margin: 6
+    margin: 6,
   },
   flash: {
-    paddingTop: 88
+    paddingTop: 88,
+  },
+  indicatorView: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
   menu: {
     backgroundColor: colors.black,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
     height: 100,
   },
 });
