@@ -17,7 +17,7 @@ import { AddData } from "../BackgroundScripts/AddData"; // Import the function
 
 function FocuScreen({ navigation, route }) {
   const [focusValue, setFocusValue] = useState(0);
-  console.log(route.params.imageUri);
+  console.log(route.params.base64);
 
   const id = "-NgxNUSg4jhQHQx8tp7L";
   const email = "kk@gmail.com";
