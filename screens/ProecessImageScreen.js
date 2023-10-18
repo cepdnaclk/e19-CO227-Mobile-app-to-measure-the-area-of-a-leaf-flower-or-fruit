@@ -1,39 +1,71 @@
-import React from 'react';
-import { View, StyleSheet, Image, Button } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
-import Screen from './Screen';
-import colors from '../config/colors';
-import VectorTextBtn from '../components/VectorTextBtn';
-import {firebase} from '../config'; // Import the Firebase library
+import React, { useState } from "react";
+import { View, StyleSheet, Image, ActivityIndicator } from "react-native";
+import Screen from "./Screen";
+import colors from "../config/colors";
+import VectorTextBtn from "../components/VectorTextBtn";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../config";
 
 function ProecessImageScreen({ route, navigation }) {
   const { savedImage } = route.params;
-  const currentUser = firebase.auth().currentUser; // Get the currently authenticated user
+  const [isLoading, setIsLoading] = useState(false);
 
-  const uploadImageToFirebase = async (imageUri) => {
+  const goNext = (downloadURL) => {
+    navigation.navigate("FocuScreen", { imageUri: downloadURL });
+  };
+
+  const uploadImageToFirebaseStorage = async (localUri) => {
     try {
-      // Get a reference to the Firestore collection where you want to store the user data
-      const userCollection = firebase.firestore().collection('users');
+      // Get the current date and time
+      const currentDate = new Date();
 
-      // Create a document with the user's UID as the document ID
-      const userDoc = userCollection.doc(currentUser.uid);
+      // Format the date and time as a string without special characters
+      const formattedDateTime = currentDate.toISOString().replace(/[-T:]/g, "");
 
-      // Update the user document with the image URL
-      await userDoc.update({
-        imageUrl: imageUri,
-      });
+      // Generate a unique filename using the formatted date and time
+      const uniqueFileName =
+        formattedDateTime + "_" + Math.random().toString(36).substring(2, 8);
 
-      console.log('Image URL updated in Firestore:', imageUri);
+      // Get a reference to your Firebase Cloud Storage
+      const storageRef = ref(storage, "your-storage-folder/" + uniqueFileName);
+
+      // Convert the local image URI to a Blob
+      const response = await fetch(localUri);
+      const blob = await response.blob();
+
+      // Upload the image to Firebase Cloud Storage
+      const snapshot = await uploadBytes(storageRef, blob);
+
+      // Get the public download URL for the uploaded image
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
+      console.log("Image uploaded to Firebase Cloud Storage:", downloadURL);
+      return downloadURL;
     } catch (error) {
-      console.error('Error updating image URL in Firestore:', error);
+      console.error("Error uploading image to Firebase Cloud Storage:", error);
     }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={styles.indicatorView}>
+        <ActivityIndicator
+          size="large"
+          color={colors.color2}
+        ></ActivityIndicator>
+      </View>
+    );
   }
 
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
+          <Image
+            source={{ uri: savedImage }}
+            style={{ width: "100%", height: "100%" }}
+          />
         </View>
       </View>
       <View style={styles.downPart}>
@@ -42,7 +74,7 @@ function ProecessImageScreen({ route, navigation }) {
           size={40}
           title="camera-retake"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={() => navigation.navigate('CameraScreen')}
+          onPress={() => navigation.navigate("CameraScreen")}
         />
         <VectorTextBtn
           name="rotate-right"
@@ -61,10 +93,10 @@ function ProecessImageScreen({ route, navigation }) {
           size={40}
           title="Next"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
-          onPress={() => {
-            // Call the function to upload the image to Firebase
-            uploadImageToFirebase(savedImage);
-            // You can add additional navigation logic here
+          onPress={async () => {
+            setIsLoading(true);
+            const downloadURL = await uploadImageToFirebaseStorage(savedImage);
+            goNext(downloadURL);
           }}
         />
       </View>
@@ -77,14 +109,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.color4,
   },
+
+  indicatorView: {
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
   imgContainer: {
     flex: 1,
     backgroundColor: colors.color3,
   },
   downPart: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     flex: 0.15,
     paddingHorizontal: 10,
   },

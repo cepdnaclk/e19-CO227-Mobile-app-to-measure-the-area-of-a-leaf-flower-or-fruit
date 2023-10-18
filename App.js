@@ -1,49 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { firebase } from './config';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useState, useEffect } from "react";
+import { firebase } from "./config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import LoginScreen from "./screens/LogInScreen";
-import SignUpScreen from './screens/SignUpScreen';
-import Dashboard from './screens/Dashboard';
-import OnboardingScreen from './screens/OnboardingScreen';
-import CameraScreen from './screens/CameraScreen';
+import LogInScreen from "./screens/LogInScreen";
+import FocuScreen from "./screens/FocuScreen";
+import ReportScreen from "./screens/ReportScreen";
+import SignUpScreen from "./screens/SignUpScreen";
+import Dashboard from "./screens/Dashboard";
+import OnboardingScreen from "./screens/OnboardingScreen";
+import CameraScreen from "./screens/CameraScreen";
 import HistoryScreen from "./screens/HistoryScreen";
 import ProecessImageScreen from "./screens/ProecessImageScreen";
 
 const Stack = createStackNavigator();
 
 function App() {
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  // const [initializing, setInitializing] = useState(true);
+  // const [user, setUser] = useState();
 
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
+  // function onAuthStateChanged(user) {
+  //   setUser(user);
+  //   if (initializing) setInitializing(false);
+  // }
 
-  useEffect(() => {
-    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
-  }, []);
+  // useEffect(() => {
+  //   const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+  //   return subscriber;
+  // }, []);
 
-  
+  // if (initializing) return null;
 
-  if (initializing) return null;
-
-
-  if (!user) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator>
-        <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ header: () => null }} />
-          <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ header: () => null }} />
-          <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ header: () => null }} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
+  // if (!user) {
+  //   return (
+  //     <NavigationContainer>
+  //       <Stack.Navigator>
+  //       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ header: () => null }} />
+  //         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ header: () => null }} />
+  //         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ header: () => null }} />
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+  //   );
+  // }
 
   return (
     <NavigationContainer>
@@ -53,6 +52,12 @@ function App() {
           component={OnboardingScreen}
           options={{ header: () => null }}
         /> */}
+
+        <Stack.Screen
+          name="CameraScreen"
+          component={CameraScreen}
+          options={{ header: () => null }}
+        />
 
         <Stack.Screen
           name="HistoryScreen"
@@ -72,11 +77,6 @@ function App() {
           options={{ header: () => null }}
         />
 
-        <Stack.Screen
-          name="CameraScreen"
-          component={CameraScreen}
-          options={{ header: () => null }}
-        />
         <Stack.Screen
           name="FocuScreen"
           component={FocuScreen}
