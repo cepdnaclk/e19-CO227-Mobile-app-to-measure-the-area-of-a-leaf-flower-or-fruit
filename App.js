@@ -12,13 +12,9 @@ import Dashboard from "./screens/Dashboard";
 import OnboardingScreen from "./screens/OnboardingScreen";
 import CameraScreen from "./screens/CameraScreen";
 import Screen from "./screens/Screen";
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import CameraScreen from "./screens/CameraScreen";
+import Predict from "./model/Predict";
 import HistoryScreen from "./screens/HistoryScreen";
 import ProecessImageScreen from "./screens/ProecessImageScreen";
-import OnboardingScreen from "./screens/OnboardingScreen";
 
 const Stack = createStackNavigator();
 

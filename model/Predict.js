@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { WebView } from "react-native-webview";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import leafdata from "../config/leafdata";
+import Geolocation from "./Geolocation";
 
 const Predict = ({ route }) => {
   const [prediction, setPrediction] = useState("");
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
 
   useEffect(() => {
     if (!route || !route.params) {
@@ -13,7 +15,9 @@ const Predict = ({ route }) => {
     }
     const { imageURL } = route.params;
     console.log("Image URL:", imageURL);
-  }, [route]);
+
+    // Access latitude and longitude from the 'location' state
+  }, [route, , location]);
 
   const handleMessage = (event) => {
     const data = JSON.parse(event.nativeEvent.data);
@@ -21,19 +25,14 @@ const Predict = ({ route }) => {
       setPrediction(data.prediction);
     }
   };
-  const BotanicalNames = {
-    Class1: "Amba kole",
-    Class2: "Rathmal",
-    Class3: "Gotukola",
-    Class4: "Boo kolee",
-    Class5: "saman pichcha",
-    Class6: "nuga kole",
-    Class7: "patapata kanda kole",
-    Class8: "Bamboo wage kole",
+
+  const handleLocationUpdate = (newLocation) => {
+    setLocation(newLocation);
   };
 
   return (
     <SafeAreaView style={styles.container}>
+      <Geolocation />
       <WebView
         source={{
           html: getHTMLContent({ imageUrl: route.params?.imageURL }),

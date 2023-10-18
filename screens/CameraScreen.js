@@ -93,8 +93,8 @@ export default function CameraScreen({ navigation }) {
         console.log(data.uri);
         setIsLoading(true);
         const downloadURL = await uploadImageToFirebaseStorage(data.uri);
-        navigation.navigate("ProecessImageScreen", {
-          firebaseImage: downloadURL,
+        navigation.navigate("Predict", {
+          imageURL: downloadURL,
         });
       } catch (e) {
         console.log(e);
@@ -116,7 +116,7 @@ export default function CameraScreen({ navigation }) {
         const imageUri = selectedAsset.uri; // Use 'uri' from the selected asset
 
         // Pass the selected image URI as a parameter when navigating to ProecessImageScreen
-        navigation.navigate("ProecessImageScreen", { savedImage: imageUri });
+        navigation.navigate("Predict", { imageURL: imageUri });
       }
     }
   };
@@ -135,7 +135,7 @@ export default function CameraScreen({ navigation }) {
         await MediaLibrary.createAssetAsync(image);
         //alert('Picture saved!');
         setImage(null);
-        navigation.navigate("ProecessImageScreen", { savedImage: image });
+        navigation.navigate("Predict", { imageURL: image });
       } catch (e) {
         console.log(e);
       }
@@ -166,8 +166,8 @@ export default function CameraScreen({ navigation }) {
               ref={cameraRef}
               style={{
                 width: windowWidth,
-                height: windowHeight - 150,
-                marginTop: -75,
+                height: windowWidth * (7 / 5),
+                marginTop: -15,
               }}
               type={cameraType}
             />
