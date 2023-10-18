@@ -9,7 +9,7 @@ import {
 
 import AppText from "../components/AppText";
 
-function SplashScreen(props) {
+function SplashScreen({ navigation }) {
   const [leftValue] = useState(new Animated.Value(300)); // Start at 200 (right corner)
   const [topValue] = useState(new Animated.Value(0));
   const rotationValue = useState(new Animated.Value(-90))[0];
@@ -116,7 +116,7 @@ function SplashScreen(props) {
 
     return "";
   }
-  console.log(leftValue);
+
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
@@ -161,7 +161,7 @@ function SplashScreen(props) {
         ></Animated.Image>
       </View>
       <TouchableOpacity onPress={moveObject} style={styles.click}>
-        <Text>Click me</Text>
+        <Text> </Text>
       </TouchableOpacity>
     </View>
   );

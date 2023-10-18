@@ -91,11 +91,9 @@ export default function CameraScreen({ navigation }) {
       try {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data.uri);
-        setIsLoading(true);
-        const downloadURL = await uploadImageToFirebaseStorage(data.uri);
-        navigation.navigate("ProecessImageScreen", {
-          firebaseImage: downloadURL,
-        });
+        // setIsLoading(true);
+        // const downloadURL = await uploadImageToFirebaseStorage(data.uri);
+        navigation.navigate("ProecessImageScreen");
       } catch (e) {
         console.log(e);
       }
