@@ -8,8 +8,12 @@ function DetailsCard({ style, data }) {
     <View style={[styles.container, style]}>
       <OneData title={"Name"} data={data.name}></OneData>
       <OneData title={"Area"} data={data.area}></OneData>
-      <OneData title={"Email"} data={data.email}></OneData>
+      <OneData title={"Botanical Name"} data={data.botanicalName}></OneData>
+      <OneData title={"Family"} data={data.family}></OneData>
+      <OneData title={"Order"} data={data.order}></OneData>
+      <OneData title={"Kingdom"} data={data.kingdom}></OneData>
       <OneData title={"Longitude"} data={data.location.longitude}></OneData>
+      <OneData title={"Latitude"} data={data.location.latitude}></OneData>
     </View>
   );
 }

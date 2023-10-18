@@ -18,15 +18,24 @@ function FocuScreen({ navigation }) {
 
   const id = "-NgxNUSg4jhQHQx8tp7L";
   const email = "kk@gmail.com";
-  const area = "23.45 cm ";
-  const name = "Bamboosa a";
-  const location = { latitude: 12.34, longitude: 23.4 };
+  const area = "112.59 cm ";
+  const name = "Bodhi Tree";
+  const botanicalName = "Ficus religiosa";
+  const family = "Moraceae";
+  const order = "Rosales";
+  const kingdom = "Plantae";
+
+  const location = { latitude: 7.265, longitude: 80.38 };
   const item2 = {
     id: id,
     email: email,
     area: area,
     name: name,
     location: location,
+    botanicalName: botanicalName,
+    family: family,
+    order: order,
+    kingdom: kingdom,
   };
 
   const pressMore = () => {

@@ -31,12 +31,23 @@ function ReportScreen({ navigation, route }) {
     navigation.goBack();
   };
 
+  //update the report
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   // for pdf
 
   let logoImagePath = logo_black; //  images for html document
   let qrImage = qrImge1;
 
-  let report_id = "ABC-2344";
+  const id = "-NgxNUSg4jhQHQx8tp7L";
+  const area = "23.45 cm ";
+  const name = "Bodhi Tree";
+  const botanicalName = "Ficus religiosa";
+  const family = "Moraceae";
+  const order = "Rosales";
+  const kingdom = "Plantae";
+  const location = { latitude: 12.34, longitude: 23.4 };
 
   let html = `<!DOCTYPE html>
   <html>
@@ -86,18 +97,23 @@ function ReportScreen({ navigation, route }) {
       <div class="content">
 
           <p class="info">Report Information:</p>
-          <p class="data"><strong>Report ID:</strong> ${report_id}</p>
+          <p class="data"><strong>Report ID:</strong> ${id}</p>
+          <p class="data"><strong>Name:</strong> ${name}</p>
 
-          <p class="data"><strong>Area of Leaf:</strong> ${34.2}</p>
-          <p class="data"><strong>Longitude:</strong> ${"53.44"}</p>
-          <p class="data"><strong>Latitude:</strong> ${"78.30"}</p>
+          <p class="data"><strong>Area of Leaf:</strong> ${area}</p>
+          <p class="data"><strong>Botanical Name:</strong> ${botanicalName}</p>
+          <p class="data"><strong>Family:</strong> ${family}</p>
+          <p class="data"><strong>Order:</strong> ${order}</p>
+          <p class="data"><strong>Kingdom:</strong> ${kingdom}</p>
+          <p class="data"><strong>Longitude:</strong> ${location.longitude}</p>
+          <p class="data"><strong>Latitude:</strong> ${location.latitude}</p>
          
       </div>
       <div class="qr-code">
           <img src=${qrImage} alt="QR Code" width="100">
       </div>
       <div class="promotion">
-          <p>Scan the QR code to learn more about our app!</p>
+          <p>This is an example qr code, we will release when App is in production!</p>
       </div>
   </body>
   </html>
@@ -112,16 +128,25 @@ function ReportScreen({ navigation, route }) {
     await shareAsync(file.uri);
   };
 
-  //update the report
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const location5 = { latitude: 7.2667, longitude: 80.6 };
+
+  const item5 = {
+    id: "-Nh2aD9YsaSokhXSuLfD",
+    area: "46.78 cm",
+    name: "Mango",
+    location: location5,
+    botanicalName: "Mangifera indica",
+    family: "Anacardiaceae",
+    order: "Sapindales",
+    kingdom: "Plantae",
+  };
 
   // if came from history
   useEffect(() => {
     if (route.params && route.params.item) {
       const data1 = route.params.item;
       setIsLoading(false);
-      setData(data1);
+      setData(item5);
     }
   }, [route.params]);
 

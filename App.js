@@ -48,21 +48,9 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name="OnboardingScreen"
           component={OnboardingScreen}
-          options={{ header: () => null }}
-        /> */}
-
-        <Stack.Screen
-          name="LogInScreen"
-          component={LogInScreen}
-          options={{ header: () => null }}
-        />
-
-        <Stack.Screen
-          name="FocuScreen"
-          component={FocuScreen}
           options={{ header: () => null }}
         />
         <Stack.Screen
@@ -72,19 +60,24 @@ function App() {
         />
 
         <Stack.Screen
-          name="SignUpScreen"
-          component={SignUpScreen}
-          options={{ header: () => null }}
-        />
-        <Stack.Screen
           name="HistoryScreen"
           component={HistoryScreen}
           options={{ header: () => null }}
         />
+        <Stack.Screen
+          name="FocuScreen"
+          component={FocuScreen}
+          options={{ header: () => null }}
+        />
+        <Stack.Screen
+          name="LogInScreen"
+          component={LogInScreen}
+          options={{ header: () => null }}
+        />
 
         <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
+          name="SignUpScreen"
+          component={SignUpScreen}
           options={{ header: () => null }}
         />
 

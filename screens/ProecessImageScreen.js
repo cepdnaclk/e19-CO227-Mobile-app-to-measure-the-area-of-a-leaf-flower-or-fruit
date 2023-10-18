@@ -9,9 +9,9 @@ import VectorTextBtn from "../components/VectorTextBtn";
 import GetA4 from "../components/GetA4";
 
 function ProecessImageScreen({ route, navigation }) {
-  const { savedImage } = route.params;
+  //const { savedImage } = route.params;
 
-  console.log(savedImage);
+  //console.log(savedImage);
 
   const goNext = () => {
     navigation.navigate("FocuScreen");
@@ -22,7 +22,7 @@ function ProecessImageScreen({ route, navigation }) {
       <View style={styles.container}>
         <View style={styles.imgContainer}>
           {/*<Image source={{ uri: savedImage }} style={{ width: '50%', height: '50%' }} />*/}
-          <GetA4 image={savedImage} />
+          <GetA4 />
         </View>
       </View>
       <View style={styles.downPart}>
