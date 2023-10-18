@@ -1,24 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Image, Button } from 'react-native';
-import { CommonActions } from '@react-navigation/native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 import Screen from './Screen';
 import colors from '../config/colors';
 import VectorTextBtn from '../components/VectorTextBtn';
-import {firebase} from '../config'; // Import the Firebase library
+import { firebase } from '../config';
 
 function ProecessImageScreen({ route, navigation }) {
   const { savedImage } = route.params;
-  const currentUser = firebase.auth().currentUser; // Get the currently authenticated user
+  const currentUser = firebase.auth().currentUser;
 
   const uploadImageToFirebase = async (imageUri) => {
     try {
-      // Get a reference to the Firestore collection where you want to store the user data
       const userCollection = firebase.firestore().collection('users');
-
-      // Create a document with the user's UID as the document ID
       const userDoc = userCollection.doc(currentUser.uid);
 
-      // Update the user document with the image URL
       await userDoc.update({
         imageUrl: imageUri,
       });
@@ -32,9 +27,11 @@ function ProecessImageScreen({ route, navigation }) {
   return (
     <Screen color={colors.color4}>
       <View style={styles.container}>
-        <View style={styles.imgContainer}>
-          <Image source={{ uri: savedImage }} style={{ width: '100%', height: '100%' }} />
-        </View>
+        <ImageBackground
+          source={{ uri: savedImage }}
+          style={styles.imgContainer}
+          resizeMode="contain" // This ensures that the image is displayed at its original size
+        />
       </View>
       <View style={styles.downPart}>
         <VectorTextBtn
@@ -62,9 +59,8 @@ function ProecessImageScreen({ route, navigation }) {
           title="Next"
           textStyle={{ fontSize: 8, paddingVertical: 0 }}
           onPress={() => {
-            // Call the function to upload the image to Firebase
             uploadImageToFirebase(savedImage);
-            // You can add additional navigation logic here
+            // Additional navigation logic here
           }}
         />
       </View>
