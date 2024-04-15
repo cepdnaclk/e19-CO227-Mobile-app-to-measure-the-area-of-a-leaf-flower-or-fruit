@@ -9,14 +9,14 @@
     <a href="https://github.com/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/issues">
         <img src="https://img.shields.io/github/issues/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit" alt="GitHub issues">
     </a>
-    <a href="https://github.com/bambara123/Food-Delivery-Website-Project-C0226/pulls">
-        <img src="https://img.shields.io/github/issues-pr/cepdnaclk/e19-3yp-3d-led-cube-holographical-display" alt="GitHub pull requests">
+    <a href="https://github.com/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/pulls">
+        <img src="https://img.shields.io/github/issues-pr/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit" alt="GitHub pull requests">
     </a>
-    <a href="https://github.com/bambara123/Food-Delivery-Website-Project-C0226/releases">
-        <img src="https://img.shields.io/github/downloads/cepdnaclk/e19-3yp-3d-led-cube-holographical-display/total" alt="GitHub downloads">
+    <a href="https://github.com/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/releases">
+        <img src="https://img.shields.io/github/downloads/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/total" alt="GitHub downloads">
     </a>
-    <a href="https://github.com/bambara123/Food-Delivery-Website-Project-C0226/releases">
-        <img src="https://img.shields.io/github/v/release/cepdnaclk/e19-3yp-3d-led-cube-holographical-display" alt="GitHub release">
+    <a href="https://github.com/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/releases">
+        <img src="https://img.shields.io/github/v/release/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit" alt="GitHub release">
     </a>
 </div>
 
