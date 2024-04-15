@@ -3,12 +3,11 @@
   <image src="docs/images/logo.png" alt ="" width="100px" height="100px">
   <h1 align="center">AgroCam</h1>
 </div>
-
-<h4 align="center"> 3D LED Holographic display | MERN | 3D object visualization + Manipulation </h4>
+<h4 align="center"> Measure Leaf Area | React Native | Identify the plant </h4>
 
 <div align="center">
-    <a href="https://github.com/bambara123/Food-Delivery-Website-Project-C0226/issues">
-        <img src="https://img.shields.io/github/issues/cepdnaclk/e19-3yp-3d-led-cube-holographical-display" alt="GitHub issues">
+    <a href="https://github.com/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit/issues">
+        <img src="https://img.shields.io/github/issues/cepdnaclk/e19-co227-Mobile-app-to-measure-the-area-of-a-leaf-flower-or-fruit" alt="GitHub issues">
     </a>
     <a href="https://github.com/bambara123/Food-Delivery-Website-Project-C0226/pulls">
         <img src="https://img.shields.io/github/issues-pr/cepdnaclk/e19-3yp-3d-led-cube-holographical-display" alt="GitHub pull requests">
@@ -26,50 +25,36 @@
 <ol style="list-style-type: decimal;">
   <li><a href="#1-introduction">Introduction</a></li>
   <li><a href="#2-features">Features</a></li>
-  <li><a href="#3-usage">Usage</a></li>
   <li><a href="#4-solution-architecture">Solution Architecture</a></li>
   <li><a href="#5-start-using">Start Using</a></li>
-  <li><a href="#6-getting-started-with-development">Getting Started with Development</a></li>
   <li><a href="#7-contributors">Contributors</a></li>
 </ol>
 
 ## <a id="1-introduction"></a>🚀 Introduction
 
-- Experience the future of interactive entertainment with our 3D LED Holographic Display. This innovative device goes beyond traditional displays, offering users the ability to showcase 3D Objects, Engaging Animations and Simple Games. Users can join our collaborative platform and connect, share their creativity, and get inspired by others. Users hold the reins, deciding how to wield the cube's versatile display.
-- You can get a clear idea using this [YouTube video](https://www.youtube.com/watch?v=jm4SAxpjhGo&t).
+- The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit.Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
 
 ## <a id="2-features"></a>🌟 Features
 
-Unlock the potential of our 3D LED holographic display with these standout features:
-
-- Effortlessly showcase your chosen 3D object files, transforming them into captivating visual experiences.
-- Bring your content to life with the ability to play simple animations.
-- Immerse yourself in inbuilt interactive games for a dynamic and engaging experience.
-- Enjoy seamless mobile touch control for intuitive navigation.
-
-## <a id="3-usage"></a>🔧 Usage
-
-- <b>Interactive entertainment device with exchange Hub:</b>  Basically, an interactive entertainment device which comes with touch control. Users can engage with our collaborative platform, sharing 3D files, animations, and Cube tips. Inspire and be inspired by diverse use cases, fostering a dynamic community of creativity.
-- <b>Versatile Social Impact:</b>  Elevate gatherings, interiors, logos, and events dynamically with mesmerizing displays. Let the device transform social settings with its captivating and interactive features.
-- <b>Resolution Beyond Entertainment:</b> Unleash the device's potential with improved resolution for product showcases, enriched education experiences, and advanced scientific visualizations. Explore a world beyond conventional entertainment possibilities.
-
-Simply, user can get creative and define their usage of the cube.
+- Plant Identification: Utilize image recognition algorithms to identify plant species from scanned images.
+- Geolocation Integration: Implement geolocation services to determine the location where the image was captured.
+- Database Integration: Integrate with plant species databases to retrieve additional information about identified plants.
+- Leaf Area Detection: Develop algorithms to accurately measure leaf area from images.
+- Report Generation: Automatically generate detailed reports including plant species, leaf area measurements, and location data.
+- Cross-Platform Sharing: Enable sharing of generated reports across various platforms such as email, messaging apps, and social media.
+- User-Friendly Interface: Design an intuitive interface for easy navigation and seamless user experience.
 
 ## <a id="4-solution-architecture"></a>🏗️ Solution Architecture
 
 This is the high level overview of the system.
 <br></br>
-<p><img src="docs/images/solution.png" alt="Solution_Archi"></p>
+<p><img src="docs/images/Geolocation API (2).png" alt="Solution_Archi"></p>
 
 ## <a id="5-start-using"></a>🎉 Start Using
 
-- Our user manual can be found here. It will guide through the entire process of using the cube with integrated social media community and the web platform.
+- We will make a release soon.
 
-## <a id="6-getting-started-with-development"></a>🛠️ Getting Started with Development
-
--  The project consist of both hardware and software parts, so we have created our design manual to make it feasible for whoever decide to implement.
--  We have attached our design manual here. Download and follow up the procedure.
-
+  
 ## <a id="7-contributors"></a>👥 Contributors 
 
 - <a href = "https://github.com/Bambara123">Kavindu Bambaragama</a>
