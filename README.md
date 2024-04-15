@@ -1,7 +1,6 @@
-![kavindu](docs/images/image_dark.png#gh-light-mode-only)
-![kavindu](docs/images/image_light.png#gh-dark-mode-only)
+
 <div align = "center">
-  <image src="code/frontend/public/assets/logo.png" alt ="" width="100px" height="100px">
+  <image src="docs/images/logo.png" alt ="" width="100px" height="100px">
   <h1 align="center">AgroCam</h1>
 </div>
 
