@@ -33,7 +33,8 @@
 ## <a id="1-introduction"></a>🚀 Introduction
 
 - The crop department of agriculture faculty is expecting to use a mobile app to measure the area of a leaf, flower or fruit.Through advanced image analysis algorithms, AgroCam precisely calculates areas, catering to the irregular shapes often found in nature. Our user-friendly interface guides you through the process, making it accessible even to those new to digital measurement techniques.
-
+- This video will give you a better idea.[YouTube video](https://www.youtube.com/watch?v=LDpdg95-ClM).
+  
 ## <a id="2-features"></a>🌟 Features
 
 - Plant Identification: Utilize image recognition algorithms to identify plant species from scanned images.
